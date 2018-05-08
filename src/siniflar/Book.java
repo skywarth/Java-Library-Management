@@ -33,32 +33,32 @@ public class Book {
 		
 	}
 	
-	public String getauthor()
+	public String getAuthor()
 	{
 		return this.author;
 	}
-	public int getbookId()
+	public int getBookId()
 	{
 		return this.bookId;
 	}
-	public String getcategory()
+	public String getCategory()
 	{
 		return this.category;
 	}
-	public int getissueStatusId()
+	public int getIssueStatusId()
 	{
 		return this.issueStatusId;
 	}
-	public int getnumberOfPages()
+	public int getNumberOfPages()
 	{
 		return this.numberOfPages;
 	}
-	public  String getreleaseDate()
+	public  String getReleaseDate()
 	{
 		return this.releaseDate;
 	}
-	public String gettitle()
+	public String getTitle()
 	{
-		return.title;
+		return this.title;
 	}
 }

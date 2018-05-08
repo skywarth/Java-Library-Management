@@ -2,22 +2,22 @@ import javax.swing.*;
 
 public class Librarian extends BaseUser implements LibrarianController
 {
-    private String librarianID;
+    private int librarianID;
     private String name;
     private String surName;
     private String userName;
     private String password;
-    private String bookID;
-    private String bookName;
+    private int bookID;
+    private String title;
     private String bookCategory;
     private String bookAuthor;
-    private String bookPage;
+    private int bookPage;
     private String bookDate;
-    private String userID;
+    private int userID;
     private String dateOfIssue;
     private String returnDate;
 
-    public String getLibrarianID() {
+    public int getLibrarianID() {
         return librarianID;
     }
 
@@ -41,7 +41,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return password;
     }
 
-    public String getBookID() {
+    public int getBookID() {
         return bookID;
     }
 
@@ -57,7 +57,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return bookAuthor;
     }
 
-    public String getBookPage() {
+    public int getBookPage() {
         return bookPage;
     }
 
@@ -65,7 +65,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return bookDate;
     }
 
-    public String getUserID() {
+    public int getUserID() {
         return userID;
     }
 
@@ -77,7 +77,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return returnDate;
     }
 
-    public void setLibrarianID(String librarianID) {
+    public void setLibrarianID(Stintring librarianID) {
         this.librarianID = librarianID;
     }
 
@@ -97,7 +97,7 @@ public class Librarian extends BaseUser implements LibrarianController
         this.password = password;
     }
 
-    public void setBookID(String bookID) {
+    public void setBookID(int bookID) {
         this.bookID = bookID;
     }
 
@@ -113,7 +113,7 @@ public class Librarian extends BaseUser implements LibrarianController
         this.bookAuthor = bookAuthor;
     }
 
-    public void setBookPage(String bookPage) {
+    public void setBookPage(int bookPage) {
         this.bookPage = bookPage;
     }
 
@@ -121,7 +121,7 @@ public class Librarian extends BaseUser implements LibrarianController
         this.bookDate = bookDate;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
@@ -133,7 +133,7 @@ public class Librarian extends BaseUser implements LibrarianController
         this.returnDate = returnDate;
     }
 
-    protected void  addBook(String bookID, String bookName, String bookCategory, String bookAuthor, String bookPage, String bookDate )
+    protected void  addBook(int bookID, String bookName, String bookCategory, String bookAuthor, int bookPage, String bookDate )
     {
         //Kitap ekleme yeri
     }
@@ -142,7 +142,7 @@ public class Librarian extends BaseUser implements LibrarianController
     {
         //Dosyadan kitap ekleme yeri
     }
-    protected  void issueBooks(String librarianID, String userID, String bookID, String dateOfIssue, String returnDate)
+    protected  void issueBooks(int librarianID, int userID, int bookID, String dateOfIssue, String returnDate)
     {
         //kitap Ã¶dÃ¼nÃ§ verme
     }
