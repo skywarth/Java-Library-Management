@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 11:58 PM
+-- Generation Time: May 09, 2018 at 01:43 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -92,16 +92,18 @@ CREATE TABLE `book` (
   `book_title` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
   `book_number_of_pages` int(11) NOT NULL,
   `book_category_id` int(11) NOT NULL,
-  `book_issue_status_id` int(11) NOT NULL
+  `book_issue_status_id` int(11) NOT NULL,
+  `book_release_date` date NOT NULL,
+  `book_publisher` varchar(100) COLLATE utf8_turkish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Dumping data for table `book`
 --
 
-INSERT INTO `book` (`book_id`, `book_title`, `book_number_of_pages`, `book_category_id`, `book_issue_status_id`) VALUES
-(1, 'Vadideki vakvaklar', 150, 2, 1),
-(2, 'uçan kaya', 222, 3, 1);
+INSERT INTO `book` (`book_id`, `book_title`, `book_number_of_pages`, `book_category_id`, `book_issue_status_id`, `book_release_date`, `book_publisher`) VALUES
+(1, 'Vadideki vakvaklar', 150, 2, 1, '0000-00-00', ''),
+(2, 'uçan kaya', 222, 3, 1, '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -226,18 +228,21 @@ CREATE TABLE `user` (
   `user_username` varchar(25) COLLATE utf8_turkish_ci NOT NULL,
   `user_password` varchar(25) COLLATE utf8_turkish_ci NOT NULL,
   `user_name` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `user_tc` int(11) NOT NULL
+  `user_tc` int(11) NOT NULL,
+  `user_email` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `user_phone_number` int(11) DEFAULT NULL,
+  `user_address` varchar(250) COLLATE utf8_turkish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_access_level_id`, `user_username`, `user_password`, `user_name`, `user_tc`) VALUES
-(1, 1, 'karamemet', '123456', 'Mustafa Kadir', 1567894561),
-(2, 2, 'niyazi', '123789', 'Niyazi Baba', 1479633215),
-(3, 3, 'tarkan', '753159', 'tarkan hilal', 1647651234),
-(4, 3, 'plaka', '44444', 'Ayşe fatma', 1231231233);
+INSERT INTO `user` (`user_id`, `user_access_level_id`, `user_username`, `user_password`, `user_name`, `user_tc`, `user_email`, `user_phone_number`, `user_address`) VALUES
+(1, 1, 'karamemet', '123456', 'Mustafa Kadir', 1567894561, NULL, NULL, NULL),
+(2, 2, 'niyazi', '123789', 'Niyazi Baba', 1479633215, NULL, NULL, NULL),
+(3, 3, 'tarkan', '753159', 'tarkan hilal', 1647651234, NULL, NULL, NULL),
+(4, 3, 'plaka', '44444', 'Ayşe fatma', 1231231233, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
