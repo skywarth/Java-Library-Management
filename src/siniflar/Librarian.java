@@ -1,10 +1,12 @@
 package siniflar;
 
+import java.util.Date;
+
 public class Librarian extends BaseUser implements LibrarianController
 {
     private int librarianID;
     private String name;
-    private String surName;
+  
     private String userName;
     private String password;
     private int bookID;
@@ -12,10 +14,10 @@ public class Librarian extends BaseUser implements LibrarianController
     private String bookCategory;
     private String bookAuthor;
     private int bookPage;
-    private String bookDate;
+    private Date bookDate;
     private int userID;
-    private String dateOfIssue;
-    private String returnDate;
+    private Date dateOfIssue;
+    private Date returnDate;
 
     public int getLibrarianID() {
         return librarianID;
@@ -26,12 +28,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return name;
     }
 
-    @Override
-    public String getSurName() {
-        return surName;
-    }
 
-    @Override
     public String getUserName() {
         return userName;
     }
@@ -61,7 +58,7 @@ public class Librarian extends BaseUser implements LibrarianController
         return bookPage;
     }
 
-    public String getBookDate() {
+    public Date getBookDate() {
         return bookDate;
     }
 
@@ -69,15 +66,15 @@ public class Librarian extends BaseUser implements LibrarianController
         return userID;
     }
 
-    public String getDateOfIssue() {
+    public Date getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public String getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setLibrarianID(Stintring librarianID) {
+    public void setLibrarianID(int librarianID) {
         this.librarianID = librarianID;
     }
 
@@ -85,9 +82,6 @@ public class Librarian extends BaseUser implements LibrarianController
         this.name = name;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
-    }
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -101,8 +95,8 @@ public class Librarian extends BaseUser implements LibrarianController
         this.bookID = bookID;
     }
 
-    public void setBookName(String bookName) {
-        this.title = bookName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setBookCategory(String bookCategory) {
@@ -117,7 +111,7 @@ public class Librarian extends BaseUser implements LibrarianController
         this.bookPage = bookPage;
     }
 
-    public void setBookDate(String bookDate) {
+    public void setBookDate(Date bookDate) {
         this.bookDate = bookDate;
     }
 
@@ -125,28 +119,28 @@ public class Librarian extends BaseUser implements LibrarianController
         this.userID = userID;
     }
 
-    public void setDateOfIssue(String dateOfIssue) {
+    public void setDateOfIssue(Date dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 
-    public void setReturnDate(String returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
-
-    protected void  addBook(int bookID, String bookName, String bookCategory, String bookAuthor, int bookPage, String bookDate )
+    
+    public void  addBook(int bookId,int issueStatusId, String title, String bookCategory, String bookAuthor, int bookPage, Date bookDate )
     {
         //Kitap ekleme yeri
     }
 
-    protected void addBookFromFile(String FileName)
+    public void addBookFromFile(String fileName)
     {
         //Dosyadan kitap ekleme yeri
     }
-    protected  void issueBooks(int librarianID, int userID, int bookID, String dateOfIssue, String returnDate)
+    public  void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue)
     {
         //kitap Ã¶dÃ¼nÃ§ verme
     }
-    protected void getBooks()
+    public void getBooks()
     {
         //bÃ¼tÃ¼n ve raflardaki kitaplarÄ± gÃ¶sterme
     }
@@ -155,21 +149,21 @@ public class Librarian extends BaseUser implements LibrarianController
     {
 
     }
-    protected  void getBooks(String issueStatusId)
+    public  void getBooks(int issueStatusId)
     {
         //Ã¶dÃ¼nÃ§ verilen gÃ¶sterilen kitaplarÄ± gÃ¶sterme
     }
-    protected void getOutDatedBooks()
+    public void getOutDatedBooks()
     {
-        //tarihi geÃ§en kitaplarÄ± gÃ¶sterme
+       
     }
 
-    protected void returnBook(String librarianID, String userID, String bookID, String returnDate)
+    public void returnBook(String librarianID, String userID, String bookID, Date returnDate)
     {
         //kitap geri alma
     }
 
-    protected void Login()
+    public void Login()
     {
      
     }

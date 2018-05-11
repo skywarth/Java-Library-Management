@@ -1,4 +1,7 @@
-package siniflar;
+﻿package siniflar;
+
+import java.util.Date;
+
 public interface LibrarianController {
 	  	public int getLibrarianID();
 	  	public void setLibrarianID(int librarianID);
@@ -6,8 +9,7 @@ public interface LibrarianController {
 	  	public String getName();
 		public void setName(String name);
 		
-	  	public String getSurName();
-	  	public void setSurName(String surName);
+	  	
 	  	
 	  	public String getUserName();
 	  	public void setUserName(String userName);
@@ -30,24 +32,24 @@ public interface LibrarianController {
 	  	public int getBookPage();
 	  	public void setBookPage(int bookPage);
 	  	
-	  	public String getBookDate();
-	  	public void setBookDate(String bookDate);
+	  	public Date getBookDate();
+	  	public void setBookDate(Date bookDate);
 	  	
 	  	public int getUserID();
 	  	public void setUserID(int userID);
 	  	
-	  	public String getDateOfIssue();
-	  	public void setDateOfIssue(String dateOfIssue);
+	  	public Date getDateOfIssue();
+	  	public void setDateOfIssue(Date dateOfIssue);
 	  	
-	  	public String getReturnDate();
-	  	public void setReturnDate(String returnDate);
+	  	public Date getReturnDate();
+	  	public void setReturnDate(Date returnDate);
 	
-	    void addBook();
-	    void addBookFromFile();
-		void chargeFine();
-		void getBooks();
-		void getBooks(int issueStatusId);
-		void getOutDatedBooks();
-		void issueBook();
-		void returnBook();
+	  	public void addBook(int bookId,int issueStatusId, String title, String bookCategory, String bookAuthor, int bookPage, Date bookDate);
+	  	public void addBookFromFile(String fileName);
+		
+		public void getBooks(int issueStatusId);
+		
+		public void getOutDatedBooks();
+		public void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue);
+		public void returnBook(String librarianID, String userID, String bookID, Date returnDate);
 }
