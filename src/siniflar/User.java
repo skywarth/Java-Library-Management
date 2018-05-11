@@ -1,4 +1,3 @@
-
 package siniflar;
 import javax.swing.*;
 
@@ -6,7 +5,7 @@ public class User extends BaseUser implements UserControler
 {
     private String TCNo;
     private String name;
-    private String surName;
+    private int userId;
     private String userName;
     private String password;
     private double debt;
@@ -14,11 +13,15 @@ public class User extends BaseUser implements UserControler
     public double getDebt() {
         return debt;
     }
+    @Override
+    public void setDebt(double debt) 
+    {
 
-    public User(String TCNo, String name, String surName, String userName, String password) {
+    }
+    public User(int userId,String TCNo, String name,  String userName, String password) {
         this.TCNo = TCNo;
         this.name = name;
-        this.surName = surName;
+
         this.userName = userName;
         this.password = password;
     }
@@ -27,29 +30,44 @@ public class User extends BaseUser implements UserControler
     {
         this.TCNo = "---";
         this.name = "---";
-        this.surName = "---";
+        this.userId=0;
         this.userName = "---";
         this.password = "---";
     }
 
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(String TCNo) {
+
+    }
     public String getTCNo() {
         return TCNo;
     }
+    public void setTCNo(String TCNo) {
+
+    }
+
 
     public String getName() {
         return name;
     }
+    public void setName(String name) {
 
-    public String getSurName() {
-        return surName;
     }
 
     public String getUserName() {
         return userName;
     }
+    public void setUserName(String userName) {
+
+    }
 
     public String getPassword() {
         return password;
+    }
+    public void setPassword(String password) {
+
     }
 
     protected void Login()
