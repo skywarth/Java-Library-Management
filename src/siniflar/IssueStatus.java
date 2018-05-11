@@ -1,4 +1,4 @@
-
+package siniflar;
 public class IssueStatus {
 	private String issueDate;
 	private int issueStatusId;
@@ -6,20 +6,26 @@ public class IssueStatus {
 	
 	//setter getter yazýlacak
 	
-	public void getIssueDate();
-	public void setIssueDate(String issueDate)
+	public String getIssueDate() {
+		return null;
+	}
+	public String setIssueDate(String issueDate)
 	{
 		return this.issueDate;
 	}
 	
-	public void getIssueStatusId();
-	public void set(int issueStatusId)
+	public int getIssueStatusId() {
+		return 0;
+	}
+	public int set(int issueStatusId)
 	{
-		return this.issueStatusId
+		return this.issueStatusId;
 	}
 	
-	public void getStatusDesc();
-	public void setStatusDesc(String statusDesc)
+	public String getStatusDesc() {
+		return null;
+	}
+	public String setStatusDesc(String statusDesc)
 	{
 		return this.statusDesc;
 	}

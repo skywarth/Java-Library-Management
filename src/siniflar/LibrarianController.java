@@ -1,45 +1,45 @@
-D
+package siniflar;
 public interface LibrarianController {
-	  	public void getLibrarianID();
+	  	public int getLibrarianID();
 	  	public void setLibrarianID(int librarianID);
 	  	
-	  	public void getName();
+	  	public String getName();
 		public void setName(String name);
 		
-	  	public void getSurName();
+	  	public String getSurName();
 	  	public void setSurName(String surName);
 	  	
-	  	public void getUserName();
+	  	public String getUserName();
 	  	public void setUserName(String userName);
 	  	
-	  	public void getPassword();
+	  	public String getPassword();
 	  	public void setPassword(String password);
 	  	
-	  	public void getBookID();
+	  	public int getBookID();
 	  	public void setBookID(int bookID);
 	  	
-	  	public void getBookName();
-	  	public void setBookName(String bookName);
+	  	public String getTitle();
+	  	public void setTitle(String bookName);
 	  	
-	  	public void getBookCategory();
+	  	public String getBookCategory();
 	  	public void setBookCategory(String bookCategory);
 	  	
-	  	public void getBookAuthor();
+	  	public String getBookAuthor();
 	  	public void setBookAuthor(String bookAuthor);
 	  	
-	  	public void getBookPage();
+	  	public int getBookPage();
 	  	public void setBookPage(int bookPage);
 	  	
-	  	public void getBookDate();
+	  	public String getBookDate();
 	  	public void setBookDate(String bookDate);
 	  	
-	  	public void getUserID();
+	  	public int getUserID();
 	  	public void setUserID(int userID);
 	  	
-	  	public void getDateOfIssue();
+	  	public String getDateOfIssue();
 	  	public void setDateOfIssue(String dateOfIssue);
 	  	
-	  	public void getReturnDate();
+	  	public String getReturnDate();
 	  	public void setReturnDate(String returnDate);
 	
 	    void addBook();

@@ -1,4 +1,4 @@
-import javax.swing.*;
+package siniflar;
 
 public class Librarian extends BaseUser implements LibrarianController
 {
@@ -45,8 +45,8 @@ public class Librarian extends BaseUser implements LibrarianController
         return bookID;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getTitle() {
+        return title;
     }
 
     public String getBookCategory() {
@@ -102,7 +102,7 @@ public class Librarian extends BaseUser implements LibrarianController
     }
 
     public void setBookName(String bookName) {
-        this.bookName = bookName;
+        this.title = bookName;
     }
 
     public void setBookCategory(String bookCategory) {
@@ -171,13 +171,6 @@ public class Librarian extends BaseUser implements LibrarianController
 
     protected void Login()
     {
-        if ((userName=="halil")&&(password=="123"))
-        {
-            JOptionPane.showMessageDialog(null, "GiriÅŸ YapÄ±ldÄ±", "MESAJ", -1);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Kullanici Adi veya Parola YanlÄ±ÅŸ.", "HATALI GÄ°RÄ°Å�", -1);
-        }
+     
     }
 }
