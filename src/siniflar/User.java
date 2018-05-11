@@ -1,7 +1,7 @@
 package siniflar;
 import javax.swing.*;
 
-public class User extends BaseUser implements UserControler
+public class User extends BaseUser implements UserController
 {
     private String TCNo;
     private String name;
@@ -26,14 +26,6 @@ public class User extends BaseUser implements UserControler
         this.password = password;
     }
 
-    public User()
-    {
-        this.TCNo = "---";
-        this.name = "---";
-        this.userId=0;
-        this.userName = "---";
-        this.password = "---";
-    }
 
     public int getUserId() {
         return userId;
@@ -81,7 +73,7 @@ public class User extends BaseUser implements UserControler
     }
     public void getBooks(int issueStatusId)
     {
-        //Raflardaki ve ödünç verilen kitaplar
+        //Raflardaki ve Ã¶dÃ¼nÃ§ verilen kitaplar
     }
     public void getBooks(String searchQuery)
     {
@@ -89,6 +81,6 @@ public class User extends BaseUser implements UserControler
     }
     public void getSelfIssuedBooks()
     {
-        //Kendisine ait şuan ve önceki kitaplar
+        //Kendisine ait ÅŸuan ve Ã¶nceki kitaplar
     }
 }
