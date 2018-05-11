@@ -1,5 +1,5 @@
 package siniflar;
-public interface UserControler
+public interface UserController
 {
         public String getTCNo();
         public void setTCNo(String TCNo);
