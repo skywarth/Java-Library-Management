@@ -1,6 +1,6 @@
-import javax.swing.JOptionPane;
+package siniflar;
 
-public class Admin  extends BaseUser iplements AdminController
+public class Admin extends BaseUser implements AdminController
 {
 	private String TCNo;
     private String name;
@@ -25,6 +25,7 @@ public class Admin  extends BaseUser iplements AdminController
          this.userName = "---";
          this.password = "---";
     }
+   
     public String getTCNo() {
         return TCNo;
     }
@@ -32,7 +33,7 @@ public class Admin  extends BaseUser iplements AdminController
     public String getName() {
         return name;
     }
-
+   @Override
     public String getSurName() {
         return surName;
     }
@@ -45,16 +46,9 @@ public class Admin  extends BaseUser iplements AdminController
         return password;
     }
     
-    protected void Login()
+    public void Login()
     {
-        if ((userName=="halil")&&(password=="123"))
-        {
-            JOptionPane.showMessageDialog(null, "GiriÅŸ YapÄ±ldÄ±", "MESAJ", -1);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Kullanici Adi veya Parola YanlÄ±ÅŸ.", "HATALI GÄ°RÄ°Å�", -1);
-        }
+
     }
     
     public void addLibrarian()

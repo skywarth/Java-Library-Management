@@ -1,3 +1,5 @@
+
+package siniflar;
 import javax.swing.*;
 
 public class User extends BaseUser implements UserControler
@@ -52,14 +54,7 @@ public class User extends BaseUser implements UserControler
 
     protected void Login()
     {
-        if ((userName=="halil")&&(password=="123"))
-        {
-            JOptionPane.showMessageDialog(null, "Giriş Yapıldı", "MESAJ", -1);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Kullanici Adi veya Parola Yanlış.", "HATALI GİRİŞ", -1);
-        }
+ 
     }
 
     public void getBooks()

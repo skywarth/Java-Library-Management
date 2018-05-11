@@ -1,3 +1,4 @@
+package siniflar;
 abstract public class BaseUser
 {
     private String TCNo;

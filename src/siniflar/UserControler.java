@@ -1,21 +1,22 @@
- public interface UserControler
+package siniflar;
+public interface UserControler
 {
-		public void getTCNo();
-		public void setTCNo(String TCNo)
+		public String getTCNo();
+		public void setTCNo(String TCNo);
 		
-		public void getName();
+		public String getName();
 		public void setName(String name);
 		
-		public void getSurName();
+		public String getSurName();
 		public void setSurName(String surName);
 		
-		public void getUserName();
+		public String getUserName();
 		public void setUserName(String userName);
 		
-		public void getPassword();
+		public String getPassword();
 		public void setPassword(String password);
 		
-		public void getDept();
+		public Double getDept();
 		public void setDept(double dept);
 		
 		

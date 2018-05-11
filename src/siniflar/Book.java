@@ -1,4 +1,4 @@
-
+package siniflar;
 
 public class Book {
 	private String author;
@@ -24,10 +24,10 @@ public class Book {
 	public Book()
 	{
 		this.author="--";
-		this.bookId="--";
+		this.bookId=0;
 		this.category="--";
-		this.issueStatusId="--";
-		this.numberOfPages="--";
+		this.issueStatusId=0;
+		this.numberOfPages=0;
 		this.releaseDate="--";
 		this.title="--";
 		
