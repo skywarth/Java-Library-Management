@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 01:43 AM
+-- Generation Time: May 13, 2018 at 03:03 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -206,15 +206,16 @@ CREATE TABLE `transaction` (
   `transaction_member_id` int(11) NOT NULL,
   `transaction_librarian_id` int(11) NOT NULL,
   `transaction_date` date NOT NULL,
-  `transaction_return_status_id` int(11) NOT NULL
+  `transaction_return_status_id` int(11) NOT NULL,
+  `transaction_return_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `transaction_book_id`, `transaction_member_id`, `transaction_librarian_id`, `transaction_date`, `transaction_return_status_id`) VALUES
-(1, 2, 4, 2, '2018-07-05', 2);
+INSERT INTO `transaction` (`transaction_id`, `transaction_book_id`, `transaction_member_id`, `transaction_librarian_id`, `transaction_date`, `transaction_return_status_id`, `transaction_return_date`) VALUES
+(1, 2, 4, 2, '2018-07-05', 2, '0000-00-00');
 
 -- --------------------------------------------------------
 
