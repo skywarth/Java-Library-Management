@@ -1,0 +1,26 @@
+SELECT book.book_title, GROUP_CONCAT(author_name)
+  FROM book
+  JOIN authorsofbook ON book.book_id = authorsofbook.authorsOfBook_book_id
+  JOIN author       ON authorsofbook.authorsOfBook_author_id = author.author_id
+ GROUP BY book.book_title;
+
+------------
+
+INSERT INTO transaction (transaction_book_id,transaction_member_id,transaction_librarian_id,transaction_date,transaction_return_status_id)
+VALUES (2,4,2,"2018-7-5",1)
+
+ve kitabı alındı durumuna çekmek için (iki komut arka arkaya çalışacak)
+
+UPDATE book
+SET book_issue_status_id=2
+WHERE book_id=2
+
+------------------
+
+UPDATE transaction
+SET transaction_return_status_id=2
+WHERE transaction_book_id=2 AND transaction_member_id=4 AND transaction_return_status_id=1
+
+kitabın teslim edilmesi için sql(kitabının id'sini ve user'ın id'sini alıyor)	
+------
+	
