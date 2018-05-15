@@ -1,6 +1,14 @@
 package siniflar;
 
 import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+import KutuphaneciModul.Kutuphaneci;
 
 public class Librarian extends BaseUser implements LibrarianController
 {
@@ -165,6 +173,32 @@ public class Librarian extends BaseUser implements LibrarianController
 
     public void Login()
     {
-     
+        try {
+	        
+         Class.forName("com.mysql.jdbc.Driver");
+         String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+         Connection con = DriverManager.getConnection(url, "root", "");
+         Statement stmt = con.createStatement();
+         
+         String sql = "SELECT * FROM user WHERE user_username='"+kullaniciAdi+"'and user_password='"+parola+"'";
+         
+         ResultSet rs=stmt.executeQuery(sql);
+         if(rs.next())
+         {
+      	JOptionPane.showMessageDialog(null, "Login Successfuly..");
+         	Kutuphaneci librarian = new Kutuphaneci();
+			librarian.setVisible(true);
+  	   }
+			
+         else
+      	   JOptionPane.showMessageDialog(null, "Incorrect username and Password...");
+      	   
+       
+         con.close();
+         } 
+  	   
+  	   catch (Exception ex){
+             System.out.println(ex);
+         } 
     }
 }
