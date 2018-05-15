@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class YonetGrafikler 
 {
@@ -43,7 +45,7 @@ public class YonetGrafikler
 	 */
 	private void initialize() {
 		frmGrafik = new JFrame();
-		frmGrafik.setBounds(100, 100, 395, 139);
+		frmGrafik.setBounds(100, 100, 412, 207);
 		frmGrafik.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGrafik.getContentPane().setLayout(null);
 		
@@ -60,7 +62,7 @@ public class YonetGrafikler
 		        frmGrafik.setVisible(true);
 			}
 		});
-		btnKategoriIinGrafik.setBounds(10, 23, 178, 56);
+		btnKategoriIinGrafik.setBounds(10, 72, 178, 56);
 		frmGrafik.getContentPane().add(btnKategoriIinGrafik);
 		
 		JButton btnKitapAlmTarihleri = new JButton("Kitap Al\u0131m Tarihleri \u0130\u00E7in Grafik");
@@ -76,8 +78,13 @@ public class YonetGrafikler
 				frmGrafik.setVisible(true);
 			}
 		});
-		btnKitapAlmTarihleri.setBounds(198, 25, 171, 54);
+		btnKitapAlmTarihleri.setBounds(198, 73, 171, 54);
 		frmGrafik.getContentPane().add(btnKitapAlmTarihleri);
+		
+		JLabel lblGrafikler = new JLabel("Grafikler");
+		lblGrafikler.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		lblGrafikler.setBounds(137, 11, 115, 34);
+		frmGrafik.getContentPane().add(lblGrafikler);
 	}
 
 }
