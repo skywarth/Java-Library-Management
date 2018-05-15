@@ -1,24 +1,21 @@
 package KutuphaneciModul;
+import siniflar.Librarian;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import YoneticiModul.Yonetici;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import siniflar.Admin;
+import siniflar.Librarian;
 
 public class Login extends JFrame {
 
@@ -78,18 +75,10 @@ public class Login extends JFrame {
 		JButton btnGiri = new JButton("Giri\u015F");
 		btnGiri.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if((txtLoginKAdi.getText().equals("halil"))&&(txtLoginParola.getText().equals("123")))
-				{
-					Kutuphaneci librarian = new Kutuphaneci();
-					librarian.setVisible(true);
-					dispose();
-				
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Kullanici Adi veya Parola Yanlýþ.", "HATALI GÝRÝÞ", -1);
-				}
+				Librarian giris=new Librarian();
+				giris.Login(txtLoginKAdi.getText(),txtLoginParola.getText());
+				dispose();
+			
 			}
 		});
 		btnGiri.setBounds(80, 165, 89, 23);

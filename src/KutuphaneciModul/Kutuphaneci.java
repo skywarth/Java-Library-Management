@@ -72,7 +72,7 @@ public class Kutuphaneci extends JFrame {
 		frameKutupheneci.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 11, 862, 443);
+		tabbedPane.setBounds(10, 31, 862, 423);
 		frameKutupheneci.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -361,5 +361,16 @@ public class Kutuphaneci extends JFrame {
 		});
 		btnOdVerVazgec.setBounds(109, 155, 89, 23);
 		panel_2.add(btnOdVerVazgec);
+		
+		JButton btnSistemdenk = new JButton("Sistemden \u00C7\u0131k\u0131\u015F");
+		btnSistemdenk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				Login sistemcikis =new Login();
+				sistemcikis.setVisible(true);
+			}
+		});
+		btnSistemdenk.setBounds(705, 0, 167, 32);
+		frameKutupheneci.add(btnSistemdenk);
 	}
 }
