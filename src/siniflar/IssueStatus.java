@@ -7,10 +7,12 @@ public class IssueStatus {
 	
 	//setter getter yazýlacak
 	
-	public void getIssueDate() {
+	public void getIssueDate() 
+	{
 	}
 
-	public void getIssueStatusId() {
+	public void getIssueStatusId() 
+	{
 	}
 	public void setIssueStatusId(int issueStatusId)
 	{
