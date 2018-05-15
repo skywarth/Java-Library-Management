@@ -171,7 +171,7 @@ public class Librarian extends BaseUser implements LibrarianController
         //kitap geri alma
     }
 
-    public void Login()
+    public void Login(String kullaniciAdi,String parola)
     {
         try {
 	        
