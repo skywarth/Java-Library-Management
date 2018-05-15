@@ -27,5 +27,5 @@ abstract public class BaseUser
         return password;
     }
 
-    abstract protected void Login();
+    abstract protected void Login(String kullaniciAdi,String parola);
 }
