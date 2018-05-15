@@ -62,7 +62,7 @@ public class User extends BaseUser implements UserController
 
     }
 
-    protected void Login()
+    protected void Login(String kullaniciAdi,String parola)
     {
  
     }
