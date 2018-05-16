@@ -2,6 +2,8 @@ package YoneticiModul;
 
 import java.awt.EventQueue;
 
+import siniflar.Admin;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -67,16 +69,9 @@ public class Login {
 		btnYonetGiris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if((txtLoginKAdi.getText().equals("halil"))&&(txtLoginParola.getText().equals("123")))
-				{
-					Yonetici yonetici=new Yonetici();
-					yonetici.frameYonetici.setVisible(true);
-					
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Kullanici Adi veya Parola Yanlýþ.", "HATALI GÝRÝÞ", -1);
-				}
+				Admin giris=new Admin();
+				giris.Login(txtLoginKAdi.getText(),txtLoginParola.getText());
+				frame.dispose();
 			}
 		});
 		btnYonetGiris.setBounds(78, 137, 89, 23);
