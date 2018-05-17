@@ -1,11 +1,16 @@
 package KutuphaneciModul;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+
+import siniflar.Librarian;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,7 +24,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 
 public class Kutuphaneci extends JFrame {
 
@@ -34,7 +41,6 @@ public class Kutuphaneci extends JFrame {
 	private JTextField txtOdVerKitapID;
 	private JTextField txtOdVerTarihi;
 	private JTextField txtIadeTarihi;
-	private JTextField txtKitapGorAdi;
 	private JTable tblButunKitaplar;
 	private JTable tblRafKitap;
 	private JTable tblOduncKitap;
@@ -191,53 +197,113 @@ public class Kutuphaneci extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane_1.addTab("Bütün Kitaplar", null, panel_3, null);
-		panel_3.setLayout(null);
-		
-		JLabel lblNewLabel_10 = new JLabel("Kitap Ad\u0131 : ");
-		lblNewLabel_10.setBounds(10, 11, 71, 14);
-		panel_3.add(lblNewLabel_10);
-		
-		txtKitapGorAdi = new JTextField();
-		txtKitapGorAdi.setBounds(117, 8, 86, 20);
-		panel_3.add(txtKitapGorAdi);
-		txtKitapGorAdi.setColumns(10);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		//panel_3.setLayout(null);
 		
 		tblButunKitaplar = new JTable();
 		tblButunKitaplar.setBounds(0, 36, 832, 329);
-		panel_3.add(tblButunKitaplar);
+		JScrollPane scrlPane = new JScrollPane(tblButunKitaplar);
 		
-		JLabel lblKategori = new JLabel("Kategori :");
-		lblKategori.setBounds(245, 11, 71, 14);
-		panel_3.add(lblKategori);
+		panel_3.add(scrlPane,BorderLayout.CENTER);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Romantizim", "Bilim Kurgu", "\u00C7ocuk", "Tarih", "Edebi"}));
-		comboBox.setBounds(324, 8, 97, 20);
-		panel_3.add(comboBox);
+		JButton btnGrntle_3 = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try
+				{
+					String []baslik={"Adý","Kategorisi","Yayýmcý","Sayfa Sayýsý","Yazarlar"};
+					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id ";
+					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
+							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
+							"GROUP BY book.book_id";
+		           
+					Librarian oduncverilen=new Librarian();
+					tblButunKitaplar.setModel(oduncverilen.getBooks(query, baslik));
+				}
+				catch (SQLException ex) 
+				{
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnGrntle_3.setBounds(704, 7, 89, 23);
+		panel_3.add(btnGrntle_3,BorderLayout.EAST);
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane_1.addTab("Raflardaki Kitaplar", null, panel_4, null);
-		panel_4.setLayout(null);
+		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		tblRafKitap = new JTable();
-		tblRafKitap.setBounds(0, 0, 832, 365);
-		panel_4.add(tblRafKitap);
+		tblRafKitap.setBounds(0, 50, 832, 315);
+		JScrollPane scrlPane_1 = new JScrollPane(tblRafKitap);
+		panel_4.add(scrlPane_1,BorderLayout.CENTER);
+		
+		JButton btnGrntle_2 = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try
+				{
+					String []baslik={"Adý","Kategorisi","Yayýmcý","Sayfa Sayýsý","Yazarlar"};
+					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='1'";
+					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
+							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
+							"WHERE book.book_issue_status_id='1' GROUP BY book.book_id ";
+					Librarian raftakiler=new Librarian();
+					tblRafKitap.setModel(raftakiler.getBooks(query, baslik));
+				}
+				catch (SQLException ex) 
+				{
+					ex.printStackTrace();
+				}
+				
+			}
+		});
+		btnGrntle_2.setBounds(705, 11, 89, 23);
+		panel_4.add(btnGrntle_2,BorderLayout.EAST);
 		
 		JPanel panel_5 = new JPanel();
 		tabbedPane_1.addTab("Ödünç Verilen Kitaplar", null, panel_5, null);
-		panel_5.setLayout(null);
+		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		tblOduncKitap = new JTable();
-		tblOduncKitap.setBounds(0, 0, 832, 365);
-		panel_5.add(tblOduncKitap);
+		tblOduncKitap.setBounds(0, 44, 832, 321);
+		JScrollPane scrlPane_2 = new JScrollPane(tblOduncKitap);
+		panel_5.add(scrlPane_2,BorderLayout.CENTER);
+		
+		
+		JButton btnGrntle_1 = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					String []baslik={"1","2","3","4","5"};
+					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
+					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
+							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
+							"WHERE book.book_issue_status_id='2' GROUP BY book.book_id ";
+					Librarian oduncverilen=new Librarian();
+					tblOduncKitap.setModel(oduncverilen.getBooks(query, baslik));
+				}
+				catch (SQLException ex) 
+				{
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnGrntle_1.setBounds(718, 11, 89, 23);
+		panel_5.add(btnGrntle_1,BorderLayout.EAST);
 		
 		JPanel panel_7 = new JPanel();
 		tabbedPane_1.addTab("Ýade Tarihi Geçmiþ Kitaplar", null, panel_7, null);
 		panel_7.setLayout(null);
 		
 		tblIadeTarihiGecmis = new JTable();
-		tblIadeTarihiGecmis.setBounds(0, 0, 832, 365);
+		tblIadeTarihiGecmis.setBounds(0, 39, 832, 326);
 		panel_7.add(tblIadeTarihiGecmis);
+		
+		JButton btnGrntle = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle.setBounds(733, 11, 89, 23);
+		panel_7.add(btnGrntle);
 		
 		JPanel panel_6 = new JPanel();
 		tabbedPane.addTab("Ýade Al", null, panel_6, null);
