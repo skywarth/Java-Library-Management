@@ -1,6 +1,9 @@
 ﻿package siniflar;
 
+import java.sql.SQLException;
 import java.util.Date;
+
+import javax.swing.table.DefaultTableModel;
 
 public interface LibrarianController {
 	  	public int getLibrarianID();
@@ -47,7 +50,7 @@ public interface LibrarianController {
 	  	public void addBook(int bookId,int issueStatusId, String title, String bookCategory, String bookAuthor, int bookPage, Date bookDate);
 	  	public void addBookFromFile(String fileName);
 		
-		public void getBooks(int issueStatusId);
+	  	public DefaultTableModel getBooks(String query,String[] baslik)throws SQLException;
 		
 		public void getOutDatedBooks();
 		public void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue);

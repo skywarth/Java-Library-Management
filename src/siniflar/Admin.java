@@ -195,9 +195,9 @@ public class Admin extends BaseUser implements AdminController
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            //String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-            String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-            connection = DriverManager.getConnection(url,"root","1234");
+            //String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+            String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","");
             statement =connection.createStatement();
         }
         catch (ClassNotFoundException ex)

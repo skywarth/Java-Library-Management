@@ -4,9 +4,11 @@ import java.util.Date;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import KutuphaneciModul.Kutuphaneci;
 
@@ -26,6 +28,11 @@ public class Librarian extends BaseUser implements LibrarianController
     private int userID;
     private Date dateOfIssue;
     private Date returnDate;
+    
+    private java.sql.Connection connection;
+	private Statement statement;
+	private ResultSet rs;
+
 
     public int getLibrarianID() {
         return librarianID;
@@ -148,9 +155,24 @@ public class Librarian extends BaseUser implements LibrarianController
     {
         //kitap Ã¶dÃ¼nÃ§ verme
     }
-    public void getBooks()
+    public DefaultTableModel getBooks(String query,String[] baslik) throws SQLException
     {
-        //bÃ¼tÃ¼n ve raflardaki kitaplarÄ± gÃ¶sterme
+    	connectDB();
+    	rs=statement.executeQuery(query);
+    	Object [][]veri;
+    	int count=0;
+    	rs.last();
+		count=rs.getRow();
+		veri=new Object[count][baslik.length];
+		rs.first();
+		for(int i=0;i<count;i++)
+		{
+			 for(int j=0;j<baslik.length;j++)
+			 veri[i][j]=rs.getObject(j+1);
+			 rs.next();
+		}
+		closeDB();
+		return new DefaultTableModel(veri, baslik);
     }
 
     private void chargeFine()
@@ -200,5 +222,36 @@ public class Librarian extends BaseUser implements LibrarianController
   	   catch (Exception ex){
              System.out.println(ex);
          } 
+    }
+    private void connectDB()
+    {
+        try
+        {
+        	 Class.forName("com.mysql.jdbc.Driver");
+             String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+             connection = DriverManager.getConnection(url, "root", "");
+             statement = connection.createStatement();
+        }
+        catch (ClassNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    //veri tabani baglantisi kapatma
+    private void closeDB()
+    {
+        try
+        {
+            connection.close();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }
