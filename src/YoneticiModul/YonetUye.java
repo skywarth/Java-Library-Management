@@ -243,7 +243,7 @@ public class YonetUye {
 		txtUyeGoruntuleTc.setColumns(10);
 		
 		tblUyeGoruntule = new JTable();
-		tblUyeGoruntule.setBounds(10, 45, 732, 306);
+		tblUyeGoruntule.setBounds(10, 39, 732, 306);
 		panel_1.add(tblUyeGoruntule);
 		
 		JButton btnUyeGosterGun = new JButton("G\u00FCncelle");
