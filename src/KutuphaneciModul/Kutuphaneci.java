@@ -1,32 +1,31 @@
 package KutuphaneciModul;
 
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-
-
-import siniflar.Librarian;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTable;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import siniflar.Librarian;
+import siniflar.LoginController;
 
 public class Kutuphaneci extends JFrame {
 
@@ -96,7 +95,7 @@ public class Kutuphaneci extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("Yazar\u0131 :");
 		lblNewLabel_3.setBounds(30, 108, 119, 14);
 		panel.add(lblNewLabel_3);
-		
+	
 		JLabel lblNewLabel_4 = new JLabel("Sayfa Say\u0131s\u0131 :");
 		lblNewLabel_4.setBounds(30, 133, 119, 14);
 		panel.add(lblNewLabel_4);
@@ -276,7 +275,7 @@ public class Kutuphaneci extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					String []baslik={"1","2","3","4","5"};
+					String []baslik={"Adý","Kategorisi","Yayýmcý","Sayfa Sayýsý","Yazarlar"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
 					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
 							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
@@ -431,9 +430,10 @@ public class Kutuphaneci extends JFrame {
 		JButton btnSistemdenk = new JButton("Sistemden \u00C7\u0131k\u0131\u015F");
 		btnSistemdenk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				LoginController log=new LoginController();
+				log.LogOut();
 				dispose();
-				Login sistemcikis =new Login();
-				sistemcikis.setVisible(true);
+				
 			}
 		});
 		btnSistemdenk.setBounds(705, 0, 167, 32);

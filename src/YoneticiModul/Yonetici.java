@@ -3,6 +3,9 @@ package YoneticiModul;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
+import siniflar.LoginController;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -73,5 +76,18 @@ public class Yonetici {
 		});
 		btnIstatistik.setBounds(128, 147, 166, 41);
 		frameYonetici.getContentPane().add(btnIstatistik);
+		
+		JButton btnKullanck = new JButton("Kullan\u0131c\u0131 \u00C7\u0131k\u0131\u015F");
+		btnKullanck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				LoginController log=new LoginController();
+				log.LogOut();
+				
+				frameYonetici.dispose();
+			}
+		});
+		btnKullanck.setBounds(301, 227, 123, 23);
+		frameYonetici.getContentPane().add(btnKullanck);
 	}
 }

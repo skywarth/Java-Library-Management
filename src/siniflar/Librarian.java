@@ -195,33 +195,7 @@ public class Librarian extends BaseUser implements LibrarianController
 
     public void Login(String kullaniciAdi,String parola)
     {
-        try {
-	        
-         Class.forName("com.mysql.jdbc.Driver");
-         String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
-         Connection con = DriverManager.getConnection(url, "root", "");
-         Statement stmt = con.createStatement();
-         
-         String sql = "SELECT * FROM user WHERE user_username='"+kullaniciAdi+"'and user_password='"+parola+"'";
-         
-         ResultSet rs=stmt.executeQuery(sql);
-         if(rs.next())
-         {
-      	JOptionPane.showMessageDialog(null, "Login Successfuly..");
-         	Kutuphaneci librarian = new Kutuphaneci();
-			librarian.setVisible(true);
-  	   }
-			
-         else
-      	   JOptionPane.showMessageDialog(null, "Incorrect username and Password...");
-      	   
        
-         con.close();
-         } 
-  	   
-  	   catch (Exception ex){
-             System.out.println(ex);
-         } 
     }
     private void connectDB()
     {
