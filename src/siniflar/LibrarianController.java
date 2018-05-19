@@ -12,8 +12,6 @@ public interface LibrarianController {
 	  	public String getName();
 		public void setName(String name);
 		
-	  	
-	  	
 	  	public String getUserName();
 	  	public void setUserName(String userName);
 	  	
@@ -47,7 +45,9 @@ public interface LibrarianController {
 	  	public Date getReturnDate();
 	  	public void setReturnDate(Date returnDate);
 	
-	  	public void addBook(int bookId,int issueStatusId, String title, String bookCategory, String bookAuthor, int bookPage, Date bookDate);
+	  	
+	  	
+	    public void  addBook(String title,int numberOfPages,int categoryId,int bookIssueId,String bookReleaseDate,String bookPublisher,String authorName) throws SQLException;
 	  	public void addBookFromFile(String fileName);
 		
 	  	public DefaultTableModel getBooks(String query,String[] baslik)throws SQLException;
@@ -55,4 +55,6 @@ public interface LibrarianController {
 		public void getOutDatedBooks();
 		public void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue);
 		public void returnBook(String librarianID, String userID, String bookID, Date returnDate);
+		
+		
 }

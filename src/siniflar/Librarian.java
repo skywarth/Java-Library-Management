@@ -1,6 +1,8 @@
 package siniflar;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -32,6 +34,14 @@ public class Librarian extends BaseUser implements LibrarianController
     private java.sql.Connection connection;
 	private Statement statement;
 	private ResultSet rs;
+	
+	private ResultSet rsBookOfauthor;
+	private ResultSet rsyazar;
+	private Statement stBookOfauthor;
+	private Statement styazar;
+	private Statement stKitapEkle;
+	private Statement stYazarEkle;
+	private Statement stYazarYoksa;
 
 
     public int getLibrarianID() {
@@ -142,9 +152,48 @@ public class Librarian extends BaseUser implements LibrarianController
         this.returnDate = returnDate;
     }
     
-    public void  addBook(int bookId,int issueStatusId, String title, String bookCategory, String bookAuthor, int bookPage, Date bookDate )
+    
+    //Kitap Ekleme
+    @Override
+    public void  addBook(String title,int numberOfPages,int categoryId,int bookIssueId,String bookReleaseDate,String bookPublisher,String authorName) throws SQLException
     {
-        //Kitap ekleme yeri
+    	connectDB();
+    	String sqlYazarKontrol="SELECT author_id FROM author WHERE author_name='"+authorName+"'";
+    	int yazarID=0;
+    	int bookID=0;
+
+    	rs=statement.executeQuery(sqlYazarKontrol);
+    	if(rs.next())
+    	{
+    		yazarID=rs.getInt(1);
+    		statement.executeUpdate("INSERT INTO book(book_title,book_number_of_pages,book_category_id,book_issue_status_id,book_release_date,book_publisher) VALUES ('"+title+"','"+numberOfPages+"','"+categoryId+"','"+bookIssueId+"','"+bookReleaseDate+"','"+bookPublisher+"')");
+    		rsBookOfauthor=statement.executeQuery("SELECT book.book_id FROM book ORDER BY book.book_id DESC LIMIT 1");
+    		while(rsBookOfauthor.next())
+    		{
+    			bookID=rsBookOfauthor.getInt(1);
+    		}
+    		statement.executeUpdate("INSERT INTO authors_of_book(authorsOfBook_book_id,authorsOfBook_author_id) VALUES('"+bookID+"','"+yazarID+"')");
+    	}
+    	else
+    	{
+    		
+    		statement.executeUpdate("INSERT INTO book(book_title,book_number_of_pages,book_category_id,book_issue_status_id,book_release_date,book_publisher) VALUES ('"+title+"','"+numberOfPages+"','"+categoryId+"','"+bookIssueId+"','"+bookReleaseDate+"','"+bookPublisher+"')");
+    		statement.executeUpdate("INSERT INTO author(author_name) VALUES ('"+authorName+"')");
+    		String sqlYazarYoksa="SELECT author.author_id FROM author ORDER BY author.author_id DESC LIMIT 1";
+    		rsyazar=statement.executeQuery(sqlYazarYoksa);
+    		while(rsyazar.next())
+    		{
+    			yazarID=rsyazar.getInt(1);
+    		}
+    		rsBookOfauthor=statement.executeQuery("SELECT book.book_id FROM book ORDER BY book.book_id DESC LIMIT 1");
+    		while(rsBookOfauthor.next())
+    		{
+    			bookID=rsBookOfauthor.getInt(1);
+    		}
+    		statement.executeUpdate("INSERT INTO authors_of_book(authorsOfBook_book_id,authorsOfBook_author_id) VALUES('"+bookID+"','"+yazarID+"')");
+    	}
+		
+		closeDB();
     }
 
     public void addBookFromFile(String fileName)
@@ -195,15 +244,79 @@ public class Librarian extends BaseUser implements LibrarianController
 
     public void Login(String kullaniciAdi,String parola)
     {
+        try {
+	        
+         Class.forName("com.mysql.jdbc.Driver");
+         String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
+         Connection con = DriverManager.getConnection(url, "root", "1234");
+         Statement stmt = con.createStatement();
+         
+         String sql = "SELECT * FROM user WHERE user_username='"+kullaniciAdi+"'and user_password='"+parola+"'";
+         
+         ResultSet rs=stmt.executeQuery(sql);
+         if(rs.next())
+         {
+      	JOptionPane.showMessageDialog(null, "Login Successfuly..");
+         	Kutuphaneci librarian = new Kutuphaneci();
+			librarian.setVisible(true);
+  	   }
+			
+         else
+      	   JOptionPane.showMessageDialog(null, "Incorrect username and Password...");
+      	   
        
+         con.close();
+         } 
+  	   
+  	   catch (Exception ex){
+             System.out.println(ex);
+         } 
     }
+    
+    
+    public static List<Category>  cmbCategory ()
+    {
+    	
+    	List<Category> liste=new ArrayList<Category>();
+    	try
+    	{
+    		Class.forName("com.mysql.jdbc.Driver");
+       	 	String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,"root","1234");
+            Statement st = con.createStatement();
+            ResultSet resultSet;
+            
+        	String query="SELECT * FROM category";
+        	resultSet=st.executeQuery(query);
+        	
+        	while(resultSet.next())
+        	{
+        		Category siradakiCategory=new Category();
+        		siradakiCategory.setID(resultSet.getInt("category_id"));
+        		siradakiCategory.setName(resultSet.getString("category_name"));
+        		liste.add(siradakiCategory);
+        	}
+        	st.close();
+        	con.close();
+        	
+    	}
+    	catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+    	catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+    	
+    	return liste;
+    }
+    
     private void connectDB()
     {
         try
         {
         	 Class.forName("com.mysql.jdbc.Driver");
-             String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
-             connection = DriverManager.getConnection(url, "root", "");
+        	 String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
+             connection = DriverManager.getConnection(url,"root","1234");
              statement = connection.createStatement();
         }
         catch (ClassNotFoundException ex)
