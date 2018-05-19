@@ -146,6 +146,14 @@ public class YonetKutuphane {
 					Admin admin=new Admin();
 					admin.add(seviye, userName, password, name, tcNo, mail, phoneNumber, address);
 					JOptionPane.showMessageDialog(pnlEkle, "Ekleme Ýþlemi Baþarýlý");
+					txtKutuphaneTCNo.setText("");
+					txtKutuphaneAdi.setText("");
+					txtKutuphaneSoyadi.setText("");
+					txtKutuphaneKAdi.setText("");
+					txtKutuphaneParola.setText("");
+					txtKutuphaneTel.setText("");
+					txtKutuphaneAdres.setText("");
+					txtKutuphaneMail.setText("");
 				}
 				catch (NumberFormatException ex) 
 				{
@@ -170,6 +178,8 @@ public class YonetKutuphane {
 				txtKutuphaneKAdi.setText("");
 				txtKutuphaneParola.setText("");
 				txtKutuphaneTel.setText("");
+				txtKutuphaneAdres.setText("");
+				txtKutuphaneMail.setText("");
 			}
 		});
 		btnKutuphaneVazgec.setBounds(464, 121, 89, 23);
@@ -467,113 +477,4 @@ public class YonetKutuphane {
 		label_11.setBounds(340, 166, 74, 14);
 		pnlSil.add(label_11);
 	}
-	
-/*	
-		//baðlantý açma metodu
-	 	private void connectDB()
-	    {
-	        try
-	        {
-	            Class.forName("com.mysql.jdbc.Driver");
-	            //String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-	            String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-	            connection = DriverManager.getConnection(url,"root","1234");
-	            statement =connection.createStatement();
-	        }
-	        catch (ClassNotFoundException ex)
-	        {
-	            ex.printStackTrace();
-	        }
-	        catch (SQLException ex)
-	        {
-	            ex.printStackTrace();
-	        }
-	    }
-	 	
-	 	//baðlantý kapatma metodu
-	    private void closeDB()
-	    {
-	        try
-	        {
-	            connection.close();
-	        }
-	        catch (SQLException ex)
-	        {
-	            ex.printStackTrace();
-	        }
-	    }
-	    
-	    public DefaultTableModel createModel(ResultSet rest) throws SQLException
-	    {
-	    	DefaultTableModel dtm = new DefaultTableModel();
-	    	ResultSetMetaData rsmd = rest.getMetaData();
-	    	for (int i = 1; i <= rsmd.getColumnCount(); i++) 
-	    	{
-	    		dtm.addColumn(rsmd.getColumnName(i));
-	    	}
-	    	Vector rows;
-	    	while (rest.next()) 
-	    	{
-	    		rows = new Vector();
-	    		for (int j = 1; j <= rsmd.getColumnCount(); j++) 
-	    		{
-	    			rows.addElement(rest.getString(j));
-	    		}
-	    		dtm.addRow(rows);
-	    	}
-	    	return dtm;
-	    }
-	    
-	    
-	    //Listeleme Metodu
-	    public DefaultTableModel listele(String query,String[] baslik) throws SQLException
-	    {
-	    	connectDB();
-	    	rs=statement.executeQuery(query);
-	    	Object [][]veri;
-	    	int count=0;
-	    	rs.last();
-			count=rs.getRow();
-			veri=new Object[count][9];
-			rs.first();
-			for(int i=0;i<count;i++)
-			{
-				 for(int j=0;j<9;j++)
-				 veri[i][j]=rs.getObject(j+1);
-				 rs.next();
-			}
-			closeDB();
-			return new DefaultTableModel(veri, baslik);
-	    }
-	    
-	    public void Ekleme(int seviye, String userName,String password, String name, int tcNo, String mail, int phoneNumber, String address) throws SQLException
-	    {
-	    	connectDB();
-			statement.executeUpdate("INSERT INTO librarymanagement.user(user_access_level_id,user_username,user_password,user_name,user_tc,user_email,user_phone_number,user_address) VALUES ('"+seviye+"','"+userName+"','"+password+"','"+name+"','"+tcNo+"','"+mail+"','"+phoneNumber+"','"+address+"')");
-			closeDB();
-	    }
-	    
-	    public void Silme(String userName, int tcNo, String name ) throws SQLException
-	    {
-	    	connectDB();
-			statement.executeUpdate("DELETE FROM librarymanagement.user WHERE (user.user_username='"+userName+"' AND user.user_tc='"+tcNo+"' AND user.user_name='"+name+"')");
-			closeDB();
-	    }
-	    
-	    public String silBilgiGoster(String userName, int tcNo, String name) throws SQLException
-	    {
-	    	connectDB();
-	    	String cumle="";
-	    	String query="SELECT * FROM librarymanagement.user WHERE (user.user_username='"+userName+"' AND user.user_tc='"+tcNo+"' AND user.user_name='"+name+"')";
-	    	rs=statement.executeQuery(query);
-	    	while(rs.next())
-	    	{
-	    		cumle=rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5)+" "+rs.getString(6)+" "+rs.getString(7)+" "+rs.getString(8)+" "+rs.getString(9);
-	    	}
-	    	closeDB();
-	    	
-	    	return cumle;
-	    	
-	    }
-	    */
 }
