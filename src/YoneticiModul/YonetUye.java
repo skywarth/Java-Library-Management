@@ -175,6 +175,14 @@ public class YonetUye {
 					Admin admin=new Admin();
 					admin.add(seviye, userName, password, name, tcNo, mail, phoneNumber, address);
 					JOptionPane.showMessageDialog(panelUyeEkle, "Ekleme Ýþlemi Baþarýlý");
+					txtUyeTc.setText("");
+					txtUyeParola.setText("");
+					txtUyeAdi.setText("");
+					txtUyeKAdi.setText("");
+					txtUyeSoyadi.setText("");
+					txtUyeMail.setText("");
+					txtUyeTelNo.setText("");
+					txtUyeAdres.setText(" ");
 				}
 				catch (NumberFormatException ex) 
 				{
@@ -193,6 +201,7 @@ public class YonetUye {
 		btnUyeCikis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtUyeTc.setText("");
+				txtUyeParola.setText("");
 				txtUyeAdi.setText("");
 				txtUyeKAdi.setText("");
 				txtUyeSoyadi.setText("");
