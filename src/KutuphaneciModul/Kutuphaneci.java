@@ -1,39 +1,48 @@
 package KutuphaneciModul;
 
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+import javax.xml.bind.ParseConversionEvent;
+
+import siniflar.Librarian;
+
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import siniflar.Librarian;
-import siniflar.LoginController;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Font;
 
 public class Kutuphaneci extends JFrame {
 
 	public JPanel frameKutupheneci;
-	private JTextField txtKitapID;
 	private JTextField txtKitapAdi;
 	private JTextField txtKitapYazar;
-	private JTextField txtKitapSayfasý;
+	private JTextField txtKitapSayfasi;
 	private JTextField txtKitapTarih;
 	private JTextField txtOdVerKuID;
 	private JTextField txtOdVerUyeID;
@@ -48,6 +57,12 @@ public class Kutuphaneci extends JFrame {
 	private JTextField txtIadeAlKitapID;
 	private JTextField txtIadeAlTarihi;
 	private JTable tblIadeTarihiGecmis;
+	
+	 private java.sql.Connection connection;
+	 private Statement statement;
+	 private ResultSet rs;
+	 private JTextField txtKitapID;
+	 private JTextField txtKitapYayimci;
 
 	/**
 	 * Launch the application.
@@ -69,6 +84,7 @@ public class Kutuphaneci extends JFrame {
 	 * Create the frame.
 	 */
 	public Kutuphaneci() {
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 898, 503);
 		frameKutupheneci = new JPanel();
@@ -84,78 +100,159 @@ public class Kutuphaneci extends JFrame {
 		tabbedPane.addTab("Kitap Ekleme", null, panel, null);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Kitap ID :");
-		lblNewLabel_1.setBounds(30, 33, 119, 14);
-		panel.add(lblNewLabel_1);
-		
 		JLabel lblNewLabel_2 = new JLabel("Katagori :");
-		lblNewLabel_2.setBounds(30, 83, 119, 14);
+		lblNewLabel_2.setBounds(248, 103, 119, 14);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Yazar\u0131 :");
-		lblNewLabel_3.setBounds(30, 108, 119, 14);
+		lblNewLabel_3.setBounds(248, 128, 119, 14);
 		panel.add(lblNewLabel_3);
-	
+		
 		JLabel lblNewLabel_4 = new JLabel("Sayfa Say\u0131s\u0131 :");
-		lblNewLabel_4.setBounds(30, 133, 119, 14);
+		lblNewLabel_4.setBounds(248, 153, 119, 14);
 		panel.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Yay\u0131mlanma Tarihi :");
-		lblNewLabel_5.setBounds(30, 158, 119, 14);
+		lblNewLabel_5.setBounds(248, 178, 119, 14);
 		panel.add(lblNewLabel_5);
 		
 		JLabel lblKitapAd_1 = new JLabel("Kitap Ad\u0131 :");
-		lblKitapAd_1.setBounds(30, 58, 119, 14);
+		lblKitapAd_1.setBounds(248, 78, 119, 14);
 		panel.add(lblKitapAd_1);
 		
 		txtKitapID = new JTextField();
-		txtKitapID.setBounds(159, 30, 119, 20);
+		txtKitapID.setEditable(false);
+		txtKitapID.setBounds(377, 50, 180, 20);
 		panel.add(txtKitapID);
 		txtKitapID.setColumns(10);
 		
 		txtKitapAdi = new JTextField();
-		txtKitapAdi.setBounds(159, 55, 119, 20);
+		txtKitapAdi.setBounds(377, 75, 180, 20);
 		panel.add(txtKitapAdi);
 		txtKitapAdi.setColumns(10);
 		
+		//JComboBox CboxKitapKatagori = new JComboBox(Librarian.cmbCategory().toArray());
 		JComboBox CboxKitapKatagori = new JComboBox();
-		CboxKitapKatagori.setModel(new DefaultComboBoxModel(new String[] {"Romantizim", "Hikaye", "Fab\u0131l", "Bilim Kurgu", "\u00C7ocuk", "F\u0131rat"}));
-		CboxKitapKatagori.setBounds(159, 80, 119, 20);
+		CboxKitapKatagori.setBounds(377, 100, 119, 20);
 		panel.add(CboxKitapKatagori);
 		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) 
+			{
+				try
+				{
+					
+					 Class.forName("com.mysql.jdbc.Driver");
+		        	 String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
+		             connection = DriverManager.getConnection(url,"root","1234");
+		             statement = connection.createStatement();
+		         	 String query="SELECT * FROM category";
+		         	 rs=statement.executeQuery(query);
+		         	 while(rs.next())
+		         	 {
+		         		CboxKitapKatagori.addItem(rs.getString(2));
+		         		//CboxKitapKatagori.setSelectedIndex(rs.getInt(1));
+		         		//CboxKitapKatagori.setSelectedItem(rs.getString(2));
+		         	 }
+
+				}
+				catch (SQLException ex) 
+				{
+					ex.printStackTrace();
+				}
+				catch (ClassNotFoundException ex)
+		        {
+		            ex.printStackTrace();
+		        }
+			}
+		});
+		
 		txtKitapYazar = new JTextField();
-		txtKitapYazar.setBounds(159, 105, 119, 20);
+		txtKitapYazar.setBounds(377, 125, 180, 20);
 		panel.add(txtKitapYazar);
 		txtKitapYazar.setColumns(10);
 		
-		txtKitapSayfasý = new JTextField();
-		txtKitapSayfasý.setBounds(159, 130, 119, 20);
-		panel.add(txtKitapSayfasý);
-		txtKitapSayfasý.setColumns(10);
+		txtKitapSayfasi = new JTextField();
+		txtKitapSayfasi.setBounds(377, 150, 180, 20);
+		panel.add(txtKitapSayfasi);
+		txtKitapSayfasi.setColumns(10);
 		
 		txtKitapTarih = new JTextField();
-		txtKitapTarih.setBounds(159, 155, 119, 20);
+		txtKitapTarih.setBounds(377, 175, 119, 20);
 		panel.add(txtKitapTarih);
 		txtKitapTarih.setColumns(10);
 		
+		txtKitapYayimci = new JTextField();
+		txtKitapYayimci.setBounds(377, 204, 180, 20);
+		panel.add(txtKitapYayimci);
+		txtKitapYayimci.setColumns(10);
+		
 		JButton btnKitapEkle = new JButton("Ekle");
-		btnKitapEkle.setBounds(116, 213, 89, 23);
+		btnKitapEkle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				try
+				{
+					SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
+		        	
+					
+					Librarian librarian =new Librarian();
+					String title=txtKitapAdi.getText();
+					int numberOfPages=Integer.valueOf(txtKitapSayfasi.getText());
+					int categoryId=CboxKitapKatagori.getSelectedIndex()+2;
+					int bookIssueId=1;
+					String date=txtKitapTarih.getText();
+					Date bookReleaseDate = dt1.parse(date); 
+					String bookPublisher=txtKitapYayimci.getText();
+					String authorName=txtKitapYazar.getText().toUpperCase();
+					librarian.addBook(title, numberOfPages, categoryId, bookIssueId, dt1.format(bookReleaseDate), bookPublisher, authorName);
+					JOptionPane.showMessageDialog(panel, "Ekleme Ýþlemi Baþarýlý");
+					
+					txtKitapAdi.setText("");
+					txtKitapSayfasi.setText("");
+					txtKitapTarih.setText("");
+					txtKitapYayimci.setText("");
+					txtKitapYazar.setText("");
+					CboxKitapKatagori.setSelectedIndex(0);
+					txtKitapYayimci.setText("");
+
+				}
+				catch (ParseException ex) {
+
+					JOptionPane.showMessageDialog(panel, "Tarih Bilgisini Doðru Giriniz.");
+				}
+				catch (NumberFormatException ex) 
+				{
+					JOptionPane.showMessageDialog(panel, "Kitap Sayýsýný Rakam Olarak Giriniz.");
+				}
+				catch (SQLException ex) 
+				{
+					JOptionPane.showMessageDialog(panel, "Veri Tabaný Hatasý.");
+					ex.printStackTrace();
+				}
+				
+			}
+		});
+		btnKitapEkle.setBounds(278, 280, 89, 23);
 		panel.add(btnKitapEkle);
 		
 		JButton btnKitapVazgec = new JButton("Temizle");
 		btnKitapVazgec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				txtKitapID.setText("");
+				
 				txtKitapAdi.setText("");
 				txtKitapTarih.setText("");
 				txtKitapYazar.setText("");
 				txtKitapTarih.setText("");
-				txtKitapSayfasý.setText("");
+				txtKitapSayfasi.setText("");
 				CboxKitapKatagori.setSelectedIndex(0);
+				txtKitapYayimci.setText("");
 			}
 		});
-		btnKitapVazgec.setBounds(344, 213, 89, 23);
+		btnKitapVazgec.setBounds(506, 280, 89, 23);
 		panel.add(btnKitapVazgec);
 		
 		JButton btnKitapDosyadanEkle = new JButton("Dosyadan Ekle");
@@ -183,8 +280,21 @@ public class Kutuphaneci extends JFrame {
 					}
 			}
 		});
-		btnKitapDosyadanEkle.setBounds(215, 213, 119, 23);
+		btnKitapDosyadanEkle.setBounds(377, 280, 119, 23);
 		panel.add(btnKitapDosyadanEkle);
+		
+		JLabel lblKitapId_1 = new JLabel("Kitap ID :");
+		lblKitapId_1.setBounds(248, 53, 119, 14);
+		panel.add(lblKitapId_1);
+		
+		JLabel lblYaymc = new JLabel("Yay\u0131mc\u0131 :");
+		lblYaymc.setBounds(248, 207, 119, 14);
+		panel.add(lblYaymc);
+		
+		JLabel lblYyyyaagg = new JLabel("YYYY-AA-GG");
+		lblYyyyaagg.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblYyyyaagg.setBounds(506, 178, 87, 14);
+		panel.add(lblYyyyaagg);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Kitap Görüntüle", null, panel_1, null);
@@ -212,9 +322,7 @@ public class Kutuphaneci extends JFrame {
 				{
 					String []baslik={"Adý","Kategorisi","Yayýmcý","Sayfa Sayýsý","Yazarlar"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id ";
-					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
-							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
-							"GROUP BY book.book_id";
+					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id INNER JOIN category ON category.category_id=book.book_category_id GROUP BY book.book_id";
 		           
 					Librarian oduncverilen=new Librarian();
 					tblButunKitaplar.setModel(oduncverilen.getBooks(query, baslik));
@@ -275,7 +383,7 @@ public class Kutuphaneci extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					String []baslik={"Adý","Kategorisi","Yayýmcý","Sayfa Sayýsý","Yazarlar"};
+					String []baslik={"1","2","3","4","5"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
 					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
 							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
@@ -430,10 +538,9 @@ public class Kutuphaneci extends JFrame {
 		JButton btnSistemdenk = new JButton("Sistemden \u00C7\u0131k\u0131\u015F");
 		btnSistemdenk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoginController log=new LoginController();
-				log.LogOut();
 				dispose();
-				
+				Login sistemcikis =new Login();
+				sistemcikis.setVisible(true);
 			}
 		});
 		btnSistemdenk.setBounds(705, 0, 167, 32);
