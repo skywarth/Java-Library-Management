@@ -1,4 +1,4 @@
-package LoginModülü;
+package LoginModÃ¼lÃ¼;
 
 
 
@@ -24,6 +24,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtLoginKAdi;
 	private JPasswordField txtLoginParola;
+	public int KUTUPHANECITC;
 	
 
 
