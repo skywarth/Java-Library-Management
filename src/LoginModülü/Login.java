@@ -24,7 +24,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtLoginKAdi;
 	private JPasswordField txtLoginParola;
-	public int KUTUPHANECITC;
+	
 
 
 	/**
@@ -47,7 +47,6 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setTitle("LOGIN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 399, 262);
 		contentPane = new JPanel();
@@ -56,20 +55,20 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblKullancAd = new JLabel("Kullan\u0131c\u0131 Ad\u0131 :");
-		lblKullancAd.setBounds(45, 43, 86, 14);
+		lblKullancAd.setBounds(20, 81, 86, 14);
 		contentPane.add(lblKullancAd);
 		
 		txtLoginKAdi = new JTextField();
-		txtLoginKAdi.setBounds(141, 40, 162, 20);
+		txtLoginKAdi.setBounds(116, 78, 162, 20);
 		contentPane.add(txtLoginKAdi);
 		txtLoginKAdi.setColumns(10);
 		
 		JLabel lblParola = new JLabel("Parola :");
-		lblParola.setBounds(45, 73, 46, 14);
+		lblParola.setBounds(20, 111, 46, 14);
 		contentPane.add(lblParola);
 		
 		txtLoginParola = new JPasswordField();
-		txtLoginParola.setBounds(141, 70, 162, 20);
+		txtLoginParola.setBounds(116, 108, 162, 20);
 		contentPane.add(txtLoginParola);
 		
 		JButton btnGiri = new JButton("Giri\u015F");
@@ -77,13 +76,11 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				LoginController giris=new LoginController();
 				giris.Login(txtLoginKAdi.getText(), txtLoginParola.getText());
-				KUTUPHANECITC=giris.KutuphaneciTC;
-				System.out.println(KUTUPHANECITC);
 				dispose();
 				
 			}
 		});
-		btnGiri.setBounds(105, 127, 89, 23);
+		btnGiri.setBounds(80, 165, 89, 23);
 		contentPane.add(btnGiri);
 		
 		JButton btnk = new JButton("\u00C7\u0131k\u0131\u015F");
@@ -92,7 +89,7 @@ public class Login extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnk.setBounds(229, 127, 89, 23);
+		btnk.setBounds(204, 165, 89, 23);
 		contentPane.add(btnk);
 	}
 
