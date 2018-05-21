@@ -43,7 +43,6 @@ public class YonetUye {
 	private JTextField txtSilGSeviye;
 	private JTextField txtSilGSifre;
 	private JTextField txtSilGTelefon;
-	private JTextField txtSilGSoyad;
 	private JPasswordField txtUyeParola;
 
 	/**
@@ -314,7 +313,7 @@ public class YonetUye {
 		
 		txtSilGTC = new JTextField();
 		txtSilGTC.setEditable(false);
-		txtSilGTC.setBounds(450, 190, 130, 20);
+		txtSilGTC.setBounds(450, 163, 130, 20);
 		panelUyeSil.add(txtSilGTC);
 		txtSilGTC.setColumns(10);
 		
@@ -326,7 +325,7 @@ public class YonetUye {
 		
 		txtSilGMail = new JTextField();
 		txtSilGMail.setEditable(false);
-		txtSilGMail.setBounds(450, 215, 130, 20);
+		txtSilGMail.setBounds(450, 188, 130, 20);
 		panelUyeSil.add(txtSilGMail);
 		txtSilGMail.setColumns(10);
 		
@@ -344,19 +343,13 @@ public class YonetUye {
 		
 		txtSilGTelefon = new JTextField();
 		txtSilGTelefon.setEditable(false);
-		txtSilGTelefon.setBounds(450, 242, 130, 20);
+		txtSilGTelefon.setBounds(450, 213, 130, 20);
 		panelUyeSil.add(txtSilGTelefon);
 		txtSilGTelefon.setColumns(10);
 		
-		txtSilGSoyad = new JTextField();
-		txtSilGSoyad.setEditable(false);
-		txtSilGSoyad.setBounds(450, 163, 130, 20);
-		panelUyeSil.add(txtSilGSoyad);
-		txtSilGSoyad.setColumns(10);
-		
 		JTextArea txtSilGAdres = new JTextArea();
 		txtSilGAdres.setEditable(false);
-		txtSilGAdres.setBounds(450, 273, 212, 78);
+		txtSilGAdres.setBounds(450, 244, 212, 78);
 		panelUyeSil.add(txtSilGAdres);
 		
 		JButton btnUyeSil = new JButton("S\u0130L");
@@ -369,16 +362,15 @@ public class YonetUye {
 					int tcNo= Integer.valueOf(txtUyeSilTc.getText());
 					
 					String bilgi= admin.Bul(tcNo, 3);
-					String[] bilgiler=bilgi.split(" ");
+					String[] bilgiler=bilgi.split(",");
 					txtSilGSeviye.setText(bilgiler[0]);
 					txtSilGkAdi.setText(bilgiler[1]);
 					txtSilGSifre.setText(bilgiler[2]);
 					txtSilGAd.setText(bilgiler[3]);
-					txtSilGSoyad.setText(bilgiler[4]);
-					txtSilGTC.setText(bilgiler[5]);
-					txtSilGMail.setText(bilgiler[6]);
-					txtSilGTelefon.setText(bilgiler[7]);
-					txtSilGAdres.setText(bilgiler[8]);
+					txtSilGTC.setText(bilgiler[4]);
+					txtSilGMail.setText(bilgiler[5]);
+					txtSilGTelefon.setText(bilgiler[6]);
+					txtSilGAdres.setText(bilgiler[7]);
 		
 					Object [] noDeleteOption = {"Evet","Hayýr","Ýptal" };
 					int noDelete=JOptionPane.showConfirmDialog(null, "Silmek Ýstiyor Musunuz ? ","Ýþlem Onayý!",JOptionPane.YES_NO_OPTION);
@@ -392,7 +384,6 @@ public class YonetUye {
 						txtSilGkAdi.setText("");
 						txtSilGSifre.setText("");
 						txtSilGAd.setText("");
-						txtSilGSoyad.setText("");
 						txtSilGTC.setText("");
 						txtSilGMail.setText("");
 						txtSilGTelefon.setText("");
@@ -426,7 +417,6 @@ public class YonetUye {
 				txtSilGkAdi.setText("");
 				txtSilGSifre.setText("");
 				txtSilGAd.setText("");
-				txtSilGSoyad.setText("");
 				txtSilGTC.setText("");
 				txtSilGMail.setText("");
 				txtSilGTelefon.setText("");
@@ -451,35 +441,30 @@ public class YonetUye {
 		lblAd.setBounds(340, 116, 74, 14);
 		panelUyeSil.add(lblAd);
 		
-		JLabel lblMail = new JLabel("Ad :");
+		JLabel lblMail = new JLabel("Ad-Soyad :");
 		lblMail.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblMail.setBounds(340, 141, 74, 14);
+		lblMail.setBounds(340, 141, 100, 14);
 		panelUyeSil.add(lblMail);
 		
 		JLabel lblNewLabel_9 = new JLabel("TC No :");
 		lblNewLabel_9.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblNewLabel_9.setBounds(340, 193, 46, 14);
+		lblNewLabel_9.setBounds(340, 166, 46, 14);
 		panelUyeSil.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("Mail :");
 		lblNewLabel_10.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblNewLabel_10.setBounds(340, 218, 46, 14);
+		lblNewLabel_10.setBounds(340, 191, 46, 14);
 		panelUyeSil.add(lblNewLabel_10);
 		
 		JLabel lblNewLabel_11 = new JLabel("Telefon :");
 		lblNewLabel_11.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblNewLabel_11.setBounds(340, 245, 74, 14);
+		lblNewLabel_11.setBounds(340, 216, 74, 14);
 		panelUyeSil.add(lblNewLabel_11);
 		
 		JLabel lblNewLabel_13 = new JLabel("Adres :");
 		lblNewLabel_13.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblNewLabel_13.setBounds(340, 273, 46, 14);
+		lblNewLabel_13.setBounds(340, 241, 46, 14);
 		panelUyeSil.add(lblNewLabel_13);
-		
-		JLabel lblSoyad = new JLabel("Soyad :");
-		lblSoyad.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblSoyad.setBounds(340, 166, 74, 14);
-		panelUyeSil.add(lblSoyad);
 	
 		frameUye.setBounds(100, 100, 793, 451);
 		frameUye.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

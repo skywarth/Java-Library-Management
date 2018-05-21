@@ -5,10 +5,14 @@ import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+
+import org.jfree.ui.RefineryUtilities;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import grafikler.*;
 
 public class YonetGrafikler 
 {
@@ -43,7 +47,8 @@ public class YonetGrafikler
 	 */
 	private void initialize() {
 		frmGrafik = new JFrame();
-		frmGrafik.setBounds(100, 100, 395, 139);
+		frmGrafik.setTitle("Grafikler");
+		frmGrafik.setBounds(100, 100, 455, 259);
 		frmGrafik.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGrafik.getContentPane().setLayout(null);
 		
@@ -51,32 +56,27 @@ public class YonetGrafikler
 		btnKategoriIinGrafik.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				frmGrafik=new JFrame("Pasta Grafik");
-				frmGrafik.setSize(500,500);
-				frmGrafik.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		        GridLayout layout=new GridLayout(0,1);
-		        frmGrafik.getContentPane().setLayout(layout);
-		        frmGrafik.getContentPane().add(new Pasta());
-		        frmGrafik.setVisible(true);
+				final pasta demo = new pasta("KATEGORÝ GRAFÝÐÝ");
+		        demo.pack();
+		        RefineryUtilities.centerFrameOnScreen(demo);
+		        demo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        demo.setVisible(true);
 			}
 		});
-		btnKategoriIinGrafik.setBounds(10, 23, 178, 56);
+		btnKategoriIinGrafik.setBounds(10, 79, 203, 56);
 		frmGrafik.getContentPane().add(btnKategoriIinGrafik);
 		
 		JButton btnKitapAlmTarihleri = new JButton("Kitap Al\u0131m Tarihleri \u0130\u00E7in Grafik");
 		btnKitapAlmTarihleri.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				frmGrafik=new JFrame("Çizgi Grafiði");
-				frmGrafik.setSize(600,600);
-				frmGrafik.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				GridLayout layout=new GridLayout(0,1);
-				frmGrafik.getContentPane().setLayout(layout);
-				frmGrafik.getContentPane().add(new Cizgi());
-				frmGrafik.setVisible(true);
+				final cizgi demo = new cizgi("Çizgi Grafiði");
+		        demo.pack();
+		        RefineryUtilities.centerFrameOnScreen(demo);
+		        demo.setVisible(true);
 			}
 		});
-		btnKitapAlmTarihleri.setBounds(198, 25, 171, 54);
+		btnKitapAlmTarihleri.setBounds(223, 80, 206, 54);
 		frmGrafik.getContentPane().add(btnKitapAlmTarihleri);
 	}
 
