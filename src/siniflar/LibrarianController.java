@@ -53,8 +53,8 @@ public interface LibrarianController {
 	  	public DefaultTableModel getBooks(String query,String[] baslik)throws SQLException;
 		
 		public void getOutDatedBooks();
-		public void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue);
-		public void returnBook(String librarianID, String userID, String bookID, Date returnDate);
+		public  void issueBooks(int librarianTC, int userTC, String bookTitle) throws SQLException ;
+		public void returnBook(int librarianTC, int userTC, String bookTitle) throws SQLException;
 		
 		
 }
