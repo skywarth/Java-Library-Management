@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -209,7 +210,7 @@ public class Kutuphaneci extends JFrame {
 					String bookPublisher=txtKitapYayimci.getText();
 					String authorName=txtKitapYazar.getText().toUpperCase();
 					librarian.addBook(title, numberOfPages, categoryId, bookIssueId, dt1.format(bookReleaseDate), bookPublisher, authorName);
-					JOptionPane.showMessageDialog(panel, "Ekleme ›˛lemi Ba˛ar˝l˝");
+					JOptionPane.showMessageDialog(panel, "Ekleme √ù√ælemi Ba√æar√Ωl√Ω");
 					
 					txtKitapAdi.setText("");
 					txtKitapSayfasi.setText("");
@@ -222,15 +223,15 @@ public class Kutuphaneci extends JFrame {
 				}
 				catch (ParseException ex) {
 
-					JOptionPane.showMessageDialog(panel, "Tarih Bilgisini Doru Giriniz.");
+					JOptionPane.showMessageDialog(panel, "Tarih Bilgisini Do√∞ru Giriniz.");
 				}
 				catch (NumberFormatException ex) 
 				{
-					JOptionPane.showMessageDialog(panel, "Kitap Say˝s˝n˝ Rakam Olarak Giriniz.");
+					JOptionPane.showMessageDialog(panel, "Kitap Say√Ωs√Ωn√Ω Rakam Olarak Giriniz.");
 				}
 				catch (SQLException ex) 
 				{
-					JOptionPane.showMessageDialog(panel, "Veri Taban˝ Hatas˝.");
+					JOptionPane.showMessageDialog(panel, "Veri Taban√Ω Hatas√Ω.");
 					ex.printStackTrace();
 				}
 				
@@ -272,7 +273,7 @@ public class Kutuphaneci extends JFrame {
 					    line=reader.readLine();
 					    String[] dosyadan=line.split("*");
 					    for(int i=0;i<dosyadan.length;i++) {
-					    txtKitapID.setText(line+"\n");//Burada ifadeyi direk sql e aktaracak sql ifadesi yazamad˝m
+					    txtKitapID.setText(line+"\n");//Burada ifadeyi direk sql e aktaracak sql ifadesi yazamad√Ωm
 					}
 					}
 					reader.close();
@@ -298,7 +299,7 @@ public class Kutuphaneci extends JFrame {
 		panel.add(lblYyyyaagg);
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Kitap Gˆr¸nt¸le", null, panel_1, null);
+		tabbedPane.addTab("Kitap G√∂r√ºnt√ºle", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
@@ -306,7 +307,7 @@ public class Kutuphaneci extends JFrame {
 		panel_1.add(tabbedPane_1);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane_1.addTab("B¸t¸n Kitaplar", null, panel_3, null);
+		tabbedPane_1.addTab("B√ºt√ºn Kitaplar", null, panel_3, null);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		//panel_3.setLayout(null);
 		
@@ -321,7 +322,7 @@ public class Kutuphaneci extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try
 				{
-					String []baslik={"Ad˝","Kategorisi","Yay˝mc˝","Sayfa Say˝s˝","Yazarlar"};
+					String []baslik={"Ad√Ω","Kategorisi","Yay√Ωmc√Ω","Sayfa Say√Ωs√Ω","Yazarlar"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id ";
 					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id INNER JOIN category ON category.category_id=book.book_category_id GROUP BY book.book_id";
 		           
@@ -351,7 +352,7 @@ public class Kutuphaneci extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try
 				{
-					String []baslik={"Ad˝","Kategorisi","Yay˝mc˝","Sayfa Say˝s˝","Yazarlar"};
+					String []baslik={"Ad√Ω","Kategorisi","Yay√Ωmc√Ω","Sayfa Say√Ωs√Ω","Yazarlar"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='1'";
 					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
 							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
@@ -370,7 +371,7 @@ public class Kutuphaneci extends JFrame {
 		panel_4.add(btnGrntle_2,BorderLayout.EAST);
 		
 		JPanel panel_5 = new JPanel();
-		tabbedPane_1.addTab("÷d¸nÁ Verilen Kitaplar", null, panel_5, null);
+		tabbedPane_1.addTab("√ñd√ºn√ß Verilen Kitaplar", null, panel_5, null);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
 		tblOduncKitap = new JTable();
@@ -384,7 +385,7 @@ public class Kutuphaneci extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					String []baslik={"1","2","3","4","5"};
+					String []baslik={"Ad√Ω","Kategorisi","Yay√Ωmc√Ω","Sayfa Say√Ωs√Ω","Yazarlar"};
 					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
 					String query="SELECT book.book_title, category.category_name, book.book_publisher, book.book_number_of_pages, GROUP_CONCAT(author.author_name) AS \"Yazarlar\" FROM book INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id \r\n" + 
 							"INNER JOIN category ON category.category_id=book.book_category_id\r\n" + 
@@ -402,19 +403,80 @@ public class Kutuphaneci extends JFrame {
 		panel_5.add(btnGrntle_1,BorderLayout.EAST);
 		
 		JPanel panel_7 = new JPanel();
-		tabbedPane_1.addTab("›ade Tarihi GeÁmi˛ Kitaplar", null, panel_7, null);
-		panel_7.setLayout(null);
+		tabbedPane_1.addTab("√ùade Tarihi Ge√ßmi√æ Kitaplar", null, panel_7, null);
+		panel_7.setLayout(new BorderLayout(0, 0));
 		
 		tblIadeTarihiGecmis = new JTable();
 		tblIadeTarihiGecmis.setBounds(0, 39, 832, 326);
-		panel_7.add(tblIadeTarihiGecmis);
+		JScrollPane scrlPane_3 = new JScrollPane(tblIadeTarihiGecmis);
+		panel_7.add(scrlPane_3,BorderLayout.CENTER);
 		
 		JButton btnGrntle = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					Class.forName("com.mysql.jdbc.Driver");
+			 		String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+			 		connection = DriverManager.getConnection(url, "root", "");
+			 		statement= connection.createStatement();
+					String []baslik={"Mermber","Title","Category","Author","Verili√æ Tarihi","√ùade edilen tarih","Bor√ß"};
+					//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
+					Librarian iadeTarGecmis=new Librarian();
+					String sql="SELECT user.user_username,book.book_title, category.category_name,author.author_name,transaction.transaction_date FROM book INNER JOIN transaction ON transaction.transaction_book_id=book.book_id INNER JOIN user ON user.user_id=transaction.transaction_member_id INNER JOIN category ON category.category_id=book.book_category_id INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id";
+					
+		        
+		         String verilisTar="";
+		         
+				rs=statement.executeQuery(sql);
+		         while(rs.next())
+		         {
+		        	 verilisTar=rs.getString(5);
+		     
+		         }
+		        
+		     	Date now=new Date();		     	
+		     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		     	Calendar c = Calendar.getInstance();
+		     	try{
+		     	  
+		     	   c.setTime(sdf.parse(verilisTar));
+		     	}catch(ParseException e){
+		     		e.printStackTrace();
+		     	 }
+		     	
+		     	c.add(Calendar.DAY_OF_MONTH, 14);  
+		    
+		     	String newDate = sdf.format(c.getTime());  
+		     	if(now.after(c.getTime()))
+		     	{
+		     		String query="SELECT user.user_name,book.book_title, category.category_name,author.author_name,transaction.transaction_date,transaction.transaction_return_date,user.user_debt FROM book INNER JOIN transaction ON transaction.transaction_book_id=book.book_id INNER JOIN user ON user.user_id=transaction.transaction_member_id INNER JOIN category ON category.category_id=book.book_category_id INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id";
+					tblIadeTarihiGecmis.setModel(iadeTarGecmis.getBooks(query, baslik));
+					Librarian borc=new Librarian();
+					borc.chargeFine();
+		     		
+		     	}
+		     	else
+		     	{
+		     		
+		     	}
+		         
+		         
+				}
+				catch (SQLException ex) 
+				{
+					ex.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		btnGrntle.setBounds(733, 11, 89, 23);
-		panel_7.add(btnGrntle);
+		panel_7.add(btnGrntle,BorderLayout.EAST);
 		
 		JPanel panel_6 = new JPanel();
-		tabbedPane.addTab("›ade Al", null, panel_6, null);
+		tabbedPane.addTab("√ùade Al", null, panel_6, null);
 		panel_6.setLayout(null);
 		
 		JLabel lblNewLabel_11 = new JLabel("K\u00FCt\u00FCphaneci ID :");
@@ -470,7 +532,7 @@ public class Kutuphaneci extends JFrame {
 		panel_6.add(btnIadeVazgec);
 		
 		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("÷d¸nÁ Ver", null, panel_2, null);
+		tabbedPane.addTab("√ñd√ºn√ß Ver", null, panel_2, null);
 		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("K\u00FCt\u00FCphaneci ID :");
@@ -539,8 +601,10 @@ public class Kutuphaneci extends JFrame {
 		JButton btnSistemdenk = new JButton("Sistemden \u00C7\u0131k\u0131\u015F");
 		btnSistemdenk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				LoginController sistemcikis=new LoginController();
+
+			
+				LoginController sistemcikis =new LoginController();
+
 				sistemcikis.LogOut();
 				dispose();
 			}
