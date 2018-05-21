@@ -15,18 +15,27 @@ public class LoginController{
 	private java.sql.Connection connection;
 	private Statement statement;
 	private ResultSet rs;
-
+	public int KutuphaneciTC;
+	
 	
 	public void  Login(String kullaniciAdi,String parola)
 	{
 		 try {
 		 		Class.forName("com.mysql.jdbc.Driver");
 		 		String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
-		 		connection = DriverManager.getConnection(url, "root", "");
+		 		connection = DriverManager.getConnection(url, "root", "1234");
 		 		statement= connection.createStatement();
 	         
 	         String sql = "SELECT user.user_access_level_id FROM user WHERE user_username='"+kullaniciAdi+"'and user_password='"+parola+"'";
 	         String seviye="";
+	         
+	         String queryLibTC="SELECT user.user_tc FROM user WHERE user.user_username='"+kullaniciAdi+"'AND user.user_password='"+parola+"' AND user.user_access_level_id='2'";
+	         ResultSet rsLibTC;
+	         rsLibTC=statement.executeQuery(queryLibTC);
+	         while(rsLibTC.next())
+	         {
+	        	 KutuphaneciTC=rsLibTC.getInt(1);
+	         }
 	         
 			rs=statement.executeQuery(sql);
 	         while(rs.next())
