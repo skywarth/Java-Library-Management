@@ -161,7 +161,7 @@ public class Librarian extends BaseUser implements LibrarianController
     public void  addBook(String title,int numberOfPages,int categoryId,int bookIssueId,String bookReleaseDate,String bookPublisher,String authorName) throws SQLException
     {
     	connectDB();
-    	String sqlYazarKontrol="SELECT author_id FROM author WHERE author_name='"+authorName+"'";
+    	String sqlYazarKontrol="SELECT author_id FROM author WHERE author_name='"+authorName.toUpperCase()+"'";
     	int yazarID=0;
     	int bookID=0;
 
@@ -181,7 +181,7 @@ public class Librarian extends BaseUser implements LibrarianController
     	{
     		
     		statement.executeUpdate("INSERT INTO book(book_title,book_number_of_pages,book_category_id,book_issue_status_id,book_release_date,book_publisher) VALUES ('"+title+"','"+numberOfPages+"','"+categoryId+"','"+bookIssueId+"','"+bookReleaseDate+"','"+bookPublisher+"')");
-    		statement.executeUpdate("INSERT INTO author(author_name) VALUES ('"+authorName+"')");
+    		statement.executeUpdate("INSERT INTO author(author_name) VALUES ('"+authorName.toUpperCase()+"')");
     		String sqlYazarYoksa="SELECT author.author_id FROM author ORDER BY author.author_id DESC LIMIT 1";
     		rsyazar=statement.executeQuery(sqlYazarYoksa);
     		while(rsyazar.next())
@@ -199,13 +199,88 @@ public class Librarian extends BaseUser implements LibrarianController
 		closeDB();
     }
 
-    public void addBookFromFile(String fileName)
+    
+    
+    //Kitap Odunc Verme
+    @Override
+    public  void issueBooks(int librarianTC, int userTC, String bookTitle) throws SQLException
     {
-        //Dosyadan kitap ekleme yeri
+    	connectDB();
+    	
+    	String queryLibID="SELECT user.user_id FROM user WHERE user.user_tc='"+librarianTC+"' AND user.user_access_level_id='2'";
+    	String queryUserID="SELECT user.user_id FROM user WHERE user.user_tc='"+userTC+"' AND user.user_access_level_id='3'";
+    	String queryBookID="SELECT book.book_id FROM book WHERE book.book_title='"+bookTitle+"'";
+    	int libID=0;
+    	int userID=0;
+    	int bookID=0;
+    	ResultSet rsLib;
+    	ResultSet rsUser;
+    	ResultSet rsBook;
+    	SimpleDateFormat dt = new SimpleDateFormat("YYYY-MM-dd");
+        String nowDate = dt.format(new Date()); 
+    	rsLib=statement.executeQuery(queryLibID);
+    	while(rsLib.next())
+    	{
+    		libID=rsLib.getInt(1);
+    	}
+    	rsUser=statement.executeQuery(queryUserID);
+    	while(rsUser.next())
+    	{
+    		userID=rsUser.getInt(1);
+    	}
+    	rsBook=statement.executeQuery(queryBookID);
+    	while(rsBook.next())
+    	{
+    		bookID=rsBook.getInt(1);
+    	}
+    	statement.executeUpdate("UPDATE book SET book_issue_status_id='2' WHERE book_id='"+bookID+"'");
+    	statement.executeUpdate("INSERT INTO transaction(transaction_book_id, transaction_member_id, transaction_librarian_id, transaction_date, transaction_return_status_id) VALUES ('"+bookID+"','"+userID+"','"+libID+"','"+nowDate+"','1')");
+    	closeDB();
+    	
     }
-    public  void issueBooks(int librarianID, int userID, int bookID, Date dateOfIssue)
+    
+    //Kitap Iade Alma
+    @Override
+    public void returnBook(int librarianTC, int userTC, String bookTitle) throws SQLException
     {
-        //kitap Ã¶dÃ¼nÃ§ verme
+    	connectDB();
+    	
+    	String queryLibID="SELECT user.user_id FROM user WHERE user.user_tc='"+librarianTC+"' AND user.user_access_level_id='2'";
+    	String queryUserID="SELECT user.user_id FROM user WHERE user.user_tc='"+userTC+"' AND user.user_access_level_id='3'";
+    	String queryBookID="SELECT book.book_id FROM book WHERE book.book_title='"+bookTitle+"'";
+    	int libID=0;
+    	int userID=0;
+    	int bookID=0;
+    	ResultSet rsLib;
+    	ResultSet rsUser;
+    	ResultSet rsBook;
+    	SimpleDateFormat dt = new SimpleDateFormat("YYYY-MM-dd");
+        String nowDate = dt.format(new Date()); 
+    	rsLib=statement.executeQuery(queryLibID);
+    	while(rsLib.next())
+    	{
+    		libID=rsLib.getInt(1);
+    	}
+    	rsUser=statement.executeQuery(queryUserID);
+    	while(rsUser.next())
+    	{
+    		userID=rsUser.getInt(1);
+    	}
+    	rsBook=statement.executeQuery(queryBookID);
+    	while(rsBook.next())
+    	{
+    		bookID=rsBook.getInt(1);
+    	}
+    	String queryReturnID="SELECT transaction.transaction_id FROM transaction WHERE transaction.transaction_book_id='"+bookID+"'AND transaction.transaction_member_id='"+userID+"' AND transaction.transaction_librarian_id='"+libID+"'AND transaction.transaction_return_status_id='1'";
+    	int returnID=0;
+    	ResultSet rsReturn;
+    	rsReturn=statement.executeQuery(queryReturnID);
+    	while(rsReturn.next())
+    	{
+    		returnID=rsReturn.getInt(1);
+    	}
+    	statement.executeUpdate("UPDATE book SET book_issue_status_id='1' WHERE book_id='"+bookID+"'");
+    	statement.executeUpdate("UPDATE transaction SET transaction_return_status_id='2' WHERE transaction_id='"+returnID+"'");
     }
     public DefaultTableModel getBooks(String query,String[] baslik) throws SQLException
     {
@@ -235,14 +310,14 @@ public class Librarian extends BaseUser implements LibrarianController
 	 		String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
 	 		connection = DriverManager.getConnection(url, "root", "");
 	 		statement= connection.createStatement();
-			String []baslik={"Mermber","Title","Category","Author","Verili� Tarihi"};
+			String []baslik={"Mermber","Title","Category","Author","Veriliþ Tarihi"};
 			//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
 			Librarian iadeTarGecmis=new Librarian();
 			String sql="SELECT user.user_id,book.book_title, author.author_name,transaction.transaction_date,transaction.transaction_return_date,user.user_debt FROM book INNER JOIN transaction ON transaction.transaction_book_id=book.book_id INNER JOIN user ON user.user_id=transaction.transaction_member_id INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id";
 			
         
          String verilisTar="";
-         String al�mTar="";
+         String alýmTar="";
          int user_id=0;
          int firstDept=0;
          
@@ -250,7 +325,7 @@ public class Librarian extends BaseUser implements LibrarianController
          while(rs.next())
          {
         	 verilisTar=rs.getString(4);
-        	 al�mTar=rs.getString(5);
+        	 alýmTar=rs.getString(5);
         	 user_id=rs.getInt(1);
         	 firstDept=rs.getInt(6);
          }
@@ -273,7 +348,7 @@ public class Librarian extends BaseUser implements LibrarianController
      	{
      		try{
      	     	  
-          	   d.setTime(sdf.parse(al�mTar));
+          	   d.setTime(sdf.parse(alýmTar));
           	 String pervDate = sdf.format(d.getTime());
           	 Date dateBefore = sdf.parse(newDate);
           	 Date dateAfter = sdf.parse(pervDate);
@@ -309,7 +384,7 @@ public class Librarian extends BaseUser implements LibrarianController
     }
     public  void getBooks(int issueStatusId)
     {
-        //Ã¶dÃ¼nÃ§ verilen gÃ¶sterilen kitaplarÄ± gÃ¶sterme
+        //ÃƒÂ¶dÃƒÂ¼nÃƒÂ§ verilen gÃƒÂ¶sterilen kitaplarÃ„Â± gÃƒÂ¶sterme
     }
     public void getOutDatedBooks()
     {
