@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.xml.bind.ParseConversionEvent;
 
 import siniflar.Librarian;
+import siniflar.LoginController;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -538,9 +539,10 @@ public class Kutuphaneci extends JFrame {
 		JButton btnSistemdenk = new JButton("Sistemden \u00C7\u0131k\u0131\u015F");
 		btnSistemdenk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				LoginController sistemcikis=new LoginController();
+				sistemcikis.LogOut();
 				dispose();
-				Login sistemcikis =new Login();
-				sistemcikis.setVisible(true);
 			}
 		});
 		btnSistemdenk.setBounds(705, 0, 167, 32);
