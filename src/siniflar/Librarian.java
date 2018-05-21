@@ -1,6 +1,7 @@
 package siniflar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.sql.Connection;
@@ -8,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -224,8 +227,84 @@ public class Librarian extends BaseUser implements LibrarianController
 		return new DefaultTableModel(veri, baslik);
     }
 
-    private void chargeFine()
+    public void chargeFine()
     {
+    	try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+	 		String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+	 		connection = DriverManager.getConnection(url, "root", "");
+	 		statement= connection.createStatement();
+			String []baslik={"Mermber","Title","Category","Author","Veriliþ Tarihi"};
+			//String query="SELECT book.book_title,book.book_number_of_pages,book.book_publisher,book.book_release_date,author.author_name,category.category_name FROM librarymanagement.book INNER JOIN librarymanagement.category ON category.category_id=book.book_category_id INNER JOIN librarymanagement.authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id WHERE book.book_issue_status_id ='2'";
+			Librarian iadeTarGecmis=new Librarian();
+			String sql="SELECT user.user_id,book.book_title, author.author_name,transaction.transaction_date,transaction.transaction_return_date,user.user_debt FROM book INNER JOIN transaction ON transaction.transaction_book_id=book.book_id INNER JOIN user ON user.user_id=transaction.transaction_member_id INNER JOIN authors_of_book ON authors_of_book.authorsOfBook_book_id=book.book_id INNER JOIN author ON author.author_id=authors_of_book.authorsOfBook_author_id";
+			
+        
+         String verilisTar="";
+         String alýmTar="";
+         int user_id=0;
+         int firstDept=0;
+         
+		rs=statement.executeQuery(sql);
+         while(rs.next())
+         {
+        	 verilisTar=rs.getString(4);
+        	 alýmTar=rs.getString(5);
+        	 user_id=rs.getInt(1);
+        	 firstDept=rs.getInt(6);
+         }
+        
+     	Date now=new Date();		     	
+     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+     	Calendar c = Calendar.getInstance();
+     	Calendar d = Calendar.getInstance();
+     	try{
+     	  
+     	   c.setTime(sdf.parse(verilisTar));
+     	}catch(ParseException e){
+     		e.printStackTrace();
+     	 }
+     	
+     	c.add(Calendar.DAY_OF_MONTH, 14);  
+    
+     	String newDate = sdf.format(c.getTime());  
+     	if(now.after(c.getTime()))
+     	{
+     		try{
+     	     	  
+          	   d.setTime(sdf.parse(alýmTar));
+          	 String pervDate = sdf.format(d.getTime());
+          	 Date dateBefore = sdf.parse(newDate);
+          	 Date dateAfter = sdf.parse(pervDate);
+          	 long difference = dateAfter.getTime() - dateBefore.getTime();
+          	 float daysBetween = (difference / (1000*60*60*24));
+          	 int debt=(firstDept+((int)daysBetween*1));
+          	 statement.executeUpdate("UPDATE user SET user.user_debt = '"+debt+"' WHERE user.user_id='"+user_id+"'");
+          	 
+          	 
+          	}catch(ParseException e)
+     		{
+          		e.printStackTrace();
+          	 }
+     		
+     		 
+     		
+     	}
+     	else
+     	{
+     		
+     	}
+         
+         
+		}
+		catch (SQLException ex) 
+		{
+			ex.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
     public  void getBooks(int issueStatusId)
@@ -247,8 +326,8 @@ public class Librarian extends BaseUser implements LibrarianController
         try {
 	        
          Class.forName("com.mysql.jdbc.Driver");
-         String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-         Connection con = DriverManager.getConnection(url, "root", "1234");
+         String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+         Connection con = DriverManager.getConnection(url, "root", "");
          Statement stmt = con.createStatement();
          
          String sql = "SELECT * FROM user WHERE user_username='"+kullaniciAdi+"'and user_password='"+parola+"'";
@@ -281,8 +360,8 @@ public class Librarian extends BaseUser implements LibrarianController
     	try
     	{
     		Class.forName("com.mysql.jdbc.Driver");
-       	 	String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-            Connection con = DriverManager.getConnection(url,"root","1234");
+       	 	String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+            Connection con = DriverManager.getConnection(url,"root","");
             Statement st = con.createStatement();
             ResultSet resultSet;
             
@@ -315,8 +394,8 @@ public class Librarian extends BaseUser implements LibrarianController
         try
         {
         	 Class.forName("com.mysql.jdbc.Driver");
-        	 String url="jdbc:mysql://127.0.0.1:3306/librarymanagement?serverTimezone=UTC";
-             connection = DriverManager.getConnection(url,"root","1234");
+        	 String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
+             connection = DriverManager.getConnection(url,"root","");
              statement = connection.createStatement();
         }
         catch (ClassNotFoundException ex)
