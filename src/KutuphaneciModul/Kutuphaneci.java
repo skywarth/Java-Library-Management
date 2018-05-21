@@ -38,6 +38,7 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Font;
+import LoginModülü.Login;
 
 public class Kutuphaneci extends JFrame {
 
@@ -46,25 +47,24 @@ public class Kutuphaneci extends JFrame {
 	private JTextField txtKitapYazar;
 	private JTextField txtKitapSayfasi;
 	private JTextField txtKitapTarih;
-	private JTextField txtOdVerKuID;
-	private JTextField txtOdVerUyeID;
-	private JTextField txtOdVerKitapID;
-	private JTextField txtOdVerTarihi;
-	private JTextField txtIadeTarihi;
+	
+	
 	private JTable tblButunKitaplar;
 	private JTable tblRafKitap;
 	private JTable tblOduncKitap;
-	private JTextField txtIadeAlKuID;
-	private JTextField txtIadeAlUyeID;
-	private JTextField txtIadeAlKitapID;
-	private JTextField txtIadeAlTarihi;
-	private JTable tblIadeTarihiGecmis;
 	
-	 private java.sql.Connection connection;
+		 private java.sql.Connection connection;
 	 private Statement statement;
 	 private ResultSet rs;
 	 private JTextField txtKitapID;
 	 private JTextField txtKitapYayimci;
+	 private JTextField txtIadeAlKutuphaneciTc;
+	 private JTextField txtIadeAlUyeTc;
+	 private JTextField txtIadeAlKitapAdi;
+	 private JTextField txtOduncVerKutuphaneciTc;
+	 private JTextField txtOduncVerUyeTc;
+	 private JTextField txtOduncVerKitapAdi;
+	
 
 	/**
 	 * Launch the application.
@@ -190,51 +190,36 @@ public class Kutuphaneci extends JFrame {
 		panel.add(txtKitapYayimci);
 		txtKitapYayimci.setColumns(10);
 		
-		JButton btnKitapEkle = new JButton("Ekle");
-		btnKitapEkle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				
-				try
-				{
-					SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
-		        	
+		JButton btnKitapDosyadanEkle = new JButton("Dosyadan Ekle");
+		btnKitapDosyadanEkle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				File f=null;
+				String path=null;
+				JOptionPane x=new JOptionPane();
+				JFileChooser fileChooser=new JFileChooser();
+				fileChooser.showOpenDialog(fileChooser);
+				f =fileChooser.getSelectedFile();
+				try {
 					
-					Librarian librarian =new Librarian();
-					String title=txtKitapAdi.getText();
-					int numberOfPages=Integer.valueOf(txtKitapSayfasi.getText());
-					int categoryId=CboxKitapKatagori.getSelectedIndex()+2;
-					int bookIssueId=1;
-					String date=txtKitapTarih.getText();
-					Date bookReleaseDate = dt1.parse(date); 
-					String bookPublisher=txtKitapYayimci.getText();
-					String authorName=txtKitapYazar.getText().toUpperCase();
-					librarian.addBook(title, numberOfPages, categoryId, bookIssueId, dt1.format(bookReleaseDate), bookPublisher, authorName);
-					JOptionPane.showMessageDialog(panel, "Ekleme Ýþlemi Baþarýlý");
-					
-					txtKitapAdi.setText("");
-					txtKitapSayfasi.setText("");
-					txtKitapTarih.setText("");
-					txtKitapYayimci.setText("");
-					txtKitapYazar.setText("");
-					CboxKitapKatagori.setSelectedIndex(0);
-					txtKitapYayimci.setText("");
-
-				}
-				catch (ParseException ex) {
-
-					JOptionPane.showMessageDialog(panel, "Tarih Bilgisini Doðru Giriniz.");
-				}
-				catch (NumberFormatException ex) 
-				{
-					JOptionPane.showMessageDialog(panel, "Kitap Sayýsýný Rakam Olarak Giriniz.");
-				}
-				catch (SQLException ex) 
-				{
-					JOptionPane.showMessageDialog(panel, "Veri Tabaný Hatasý.");
-					ex.printStackTrace();
-				}
-				
+					Librarian librarian= new Librarian();
+					BufferedReader reader = new BufferedReader(new FileReader(f));
+					String line=null;
+					int islemSayisi=0;
+					while (reader.ready()) 
+					{
+					    line=reader.readLine();
+					    String[] dosyadan=line.split(",");
+					    for(int i=0;i<(dosyadan.length)/6;i++) 
+					    {
+					    	librarian.addBook(dosyadan[0].toUpperCase(), Integer.valueOf(dosyadan[2]), Integer.valueOf(dosyadan[3]), 1, dosyadan[4], dosyadan[5].toUpperCase(), dosyadan[1].toUpperCase());
+					    	islemSayisi++;
+					    }
+					}
+					JOptionPane.showMessageDialog(panel, "Dosyadan "+islemSayisi+" Tane Kitap Eklendi.");
+					reader.close();
+					} catch (Exception ex) {
+					x.showMessageDialog(frameKutupheneci, "HATA: "+ex);
+					}
 			}
 		});
 		btnKitapEkle.setBounds(278, 280, 89, 23);
@@ -381,6 +366,84 @@ public class Kutuphaneci extends JFrame {
 		
 		
 		JButton btnGrntle_1 = new JButton("G\u00F6r\u00FCnt\u00FCle");
+		btnGrntle.setBounds(733, 11, 89, 23);
+		panel_7.add(btnGrntle);
+		
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("Ödünç Ver", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		JLabel label_4 = new JLabel("K\u00FCt\u00FCphaneci TC NO :");
+		label_4.setBounds(241, 63, 129, 14);
+		panel_2.add(label_4);
+		
+		JLabel label_5 = new JLabel("Uye TC NO :");
+		label_5.setBounds(241, 94, 80, 14);
+		panel_2.add(label_5);
+		
+		JLabel label_6 = new JLabel("Kitap Ad\u0131 :");
+		label_6.setBounds(241, 125, 80, 14);
+		panel_2.add(label_6);
+		
+		txtOduncVerKutuphaneciTc = new JTextField();
+		txtOduncVerKutuphaneciTc.setColumns(10);
+		txtOduncVerKutuphaneciTc.setBounds(364, 60, 129, 20);
+		panel_2.add(txtOduncVerKutuphaneciTc);
+		
+		txtOduncVerUyeTc = new JTextField();
+		txtOduncVerUyeTc.setColumns(10);
+		txtOduncVerUyeTc.setBounds(364, 91, 129, 20);
+		panel_2.add(txtOduncVerUyeTc);
+		
+		txtOduncVerKitapAdi = new JTextField();
+		txtOduncVerKitapAdi.setColumns(10);
+		txtOduncVerKitapAdi.setBounds(364, 122, 129, 20);
+		panel_2.add(txtOduncVerKitapAdi);
+		//
+		JButton btnOduncVer = new JButton("\u00D6D\u00DCN\u00C7 VER");
+		btnOduncVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int librarianTC=Integer.valueOf(txtOduncVerKutuphaneciTc.getText());
+				int userTC=Integer.valueOf(txtOduncVerUyeTc.getText());
+				String bookTitle=txtOduncVerKitapAdi.getText().toUpperCase();
+				
+				Librarian librarian=new Librarian();
+				Login lg=new Login();
+				int libTC=lg.KUTUPHANECITC;
+				System.out.println(libTC);
+				try
+				{
+					librarian.issueBooks(librarianTC, userTC, bookTitle);
+					JOptionPane.showMessageDialog(panel_2, "Ödünç Verme Ýþlemi Baþarýlý");
+					System.out.println(libTC);
+					txtOduncVerKutuphaneciTc.setText("");
+					txtOduncVerKitapAdi.setText("");
+					txtOduncVerUyeTc.setText("");
+				}
+				catch (NumberFormatException ex) 
+				{
+					JOptionPane.showMessageDialog(panel_2, "Kütüphaneci ve Uye TC'sini Doðru Giriniz.");
+				}
+				catch (SQLException ex) 
+				{
+					JOptionPane.showMessageDialog(panel_2, "Veri Tabaný Hatasý.");
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnOduncVer.setBounds(257, 199, 129, 23);
+		panel_2.add(btnOduncVer);
+		//
+		JButton button_3 = new JButton("Temizle");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				txtOduncVerKutuphaneciTc.setText("");
+				txtOduncVerKitapAdi.setText("");
+				txtOduncVerUyeTc.setText("");
+			}
+		});
 		btnGrntle_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try
@@ -476,7 +539,37 @@ public class Kutuphaneci extends JFrame {
 		panel_7.add(btnGrntle,BorderLayout.EAST);
 		
 		JPanel panel_6 = new JPanel();
-		tabbedPane.addTab("Ýade Al", null, panel_6, null);
+		JButton btnIadeAl = new JButton("IADE AL");
+		btnIadeAl.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				int librarianTC=Integer.valueOf(txtIadeAlKutuphaneciTc.getText());
+				int userTC=Integer.valueOf(txtIadeAlUyeTc.getText());
+				String bookTitle=txtIadeAlKitapAdi.getText().toUpperCase();
+				
+				Login login=new Login();
+				int libTC=login.KUTUPHANECITC;
+				
+				Librarian librarian=new Librarian();
+				try
+				{
+					librarian.returnBook(librarianTC, userTC, bookTitle);
+					JOptionPane.showMessageDialog(panel_2, "Ýade Alma Ýþlemi Baþarýlý");
+					txtIadeAlKutuphaneciTc.setText("");
+					txtIadeAlUyeTc.setText("");
+					txtIadeAlKitapAdi.setText("");
+				}
+				catch (NumberFormatException ex) 
+				{
+					JOptionPane.showMessageDialog(panel_2, "Kütüphaneci ve Uye TC'sini Doðru Giriniz.");
+				}
+				catch (SQLException ex) 
+				{
+					JOptionPane.showMessageDialog(panel_2, "Veri Tabaný Hatasý.");
+					ex.printStackTrace();
+				}
+			}
+		});
 		panel_6.setLayout(null);
 		
 		JLabel lblNewLabel_11 = new JLabel("K\u00FCt\u00FCphaneci ID :");
@@ -514,9 +607,7 @@ public class Kutuphaneci extends JFrame {
 		txtIadeAlTarihi.setBounds(116, 83, 86, 20);
 		panel_6.add(txtIadeAlTarihi);
 		txtIadeAlTarihi.setColumns(10);
-		
-		JButton btnIadeAl = new JButton("\u0130ADE AL");
-		btnIadeAl.setBounds(10, 143, 89, 23);
+		btnIadeAl.setBounds(166, 177, 133, 23);
 		panel_6.add(btnIadeAl);
 		
 		JButton btnIadeVazgec = new JButton("Temizle");
