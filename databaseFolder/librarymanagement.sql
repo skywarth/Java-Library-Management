@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 17 May 2018, 15:03:11
+-- Üretim Zamanı: 21 May 2018, 00:44:35
 -- Sunucu sürümü: 10.1.31-MariaDB
 -- PHP Sürümü: 7.2.4
 
@@ -242,7 +242,7 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`transaction_id`, `transaction_book_id`, `transaction_member_id`, `transaction_librarian_id`, `transaction_date`, `transaction_return_status_id`, `transaction_return_date`) VALUES
-(1, 2, 4, 2, '2018-07-05', 2, '0000-00-00');
+(1, 2, 4, 2, '2018-05-05', 2, '2018-07-19');
 
 -- --------------------------------------------------------
 
@@ -259,38 +259,39 @@ CREATE TABLE `user` (
   `user_tc` int(11) NOT NULL,
   `user_email` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
   `user_phone_number` int(11) DEFAULT NULL,
-  `user_address` varchar(250) COLLATE utf8_turkish_ci DEFAULT NULL
+  `user_address` varchar(250) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `user_debt` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_access_level_id`, `user_username`, `user_password`, `user_name`, `user_tc`, `user_email`, `user_phone_number`, `user_address`) VALUES
-(1, 1, 'karamemet', '123456', 'Mustafa Kadir', 1567894561, NULL, NULL, NULL),
-(2, 2, 'niyazi', '123789', 'Niyazi Baba', 1479633215, NULL, NULL, NULL),
-(3, 3, 'tarkan', '753159', 'tarkan hilal', 1647651234, NULL, NULL, NULL),
-(4, 3, 'plaka', '44444', 'Ayşe fatma', 1231231233, NULL, NULL, NULL),
-(5, 3, 'byahmet', '789456', 'Ahmet Bay', 1030215364, 'sdjsdfh@gmail.com', 534366785, 'talas bahçeli evler sigorta sitesi '),
-(7, 3, 'samsam', '12345', 'samet samimiyet', 541631565, 'same@gmail.com', 542254, 'talas melihşah mahallesi'),
-(8, 3, 'halilovski', 'halil123', 'halil ovix', 6451361, 'halilo@gmail.com', 46745213, 'bimex mahallesi bim sokağı'),
-(9, 3, 'yigitosivas', 'sivas', 'yiğit sivaslı', 254651314, 'kimgiyi@gmail.com', 214254, 'anayurt mahallesi direk sokak'),
-(10, 3, 'ensevren', 'sivaslı ', 'enes evren', 4257869, 'ens@gmail.com', 24586584, 'tokat en büyük şehir'),
-(11, 3, 'yunus', 'ynscn', 'yunus can', 5864565, 'ynscn@gmail.com', 35464458, 'bu adress cok gizlidir.'),
-(12, 3, 'marsu', 'marsus', 'marsu işletim', 53465416, 'marsu@gmail.com', 65465456, 'marsu bir su şirketidir'),
-(13, 3, 'acer', 'acerhacer', 'hacer acer', 2314685, 'acrhcrqgmqil.com', 6548694, 'acer bilgisayar ltd. sti'),
-(14, 3, 'kimsesizler', 'flashKutusu', 'kimsesiz usb', 5416486, 'kimsesiz@gmail.com', 4536546, 'görevli odası erciyes üniveristesi'),
-(15, 3, 'caykurHasan', 'hsncykur', 'Çaykur hasan', 54656846, 'hsncykur@gmail.com', 58461, 'caykur güzel bir çay markasıdır'),
-(16, 2, 'GamzeliYarim', 'mrvsvgli', 'Gamze Ulu', 456542, 'gamze@gmail.com', 864635133, 'gamze caddesi gamze sokak'),
-(18, 2, 'txtelhalil', 'halil akkürşat', 'halil kürşat ersoy', 64146, 'hallkursat@gamil.com', 4554646, 'kimsesizler mahallesi erciyes küme evler'),
-(19, 2, 'sumeyra', 'smyrs', 'sumeyra kırmızı', 4564686, 'smyrs@gmail.com', 6, 'tulpar caddesi monster sokak'),
-(20, 2, 'abraMonster', 'monsterAbra', ' Monster Abra', 5867354, 'monster@gmail.com', 45668, 'osmanoğlu caddesi istanbul'),
-(21, 2, 'KayseriProvience', 'kysriPro', 'Kayseri Belediyesi', 785323, 'kysri@gmail.com', 4469463, 'melihgazi caddesi kayseri'),
-(22, 1, 'bahriyeBsturk', 'bstrkBah', 'Bahtiyar Başturk', 13268749, 'basbah@gmail.com', 65464123, 'erciyes üniversitesi sigorta sitesi'),
-(23, 1, 'lotto', 'losttototos', 'lotto cüzdan', 2165855, 'lotto@gmail.com', 9634656, 'lotto cüzdan caddesi akçaburgaz mahallesi'),
-(24, 1, 'logitecht', 'logimouse', 'log mouse', 1687853, 'logitech@gmail.com', 46135103, 'logitech mahallesi mouse sitesi kayseri'),
-(25, 1, 'everest', 'everestCamera', 'Everest Kamera', 31897153, 'everstqgmail.com', 1314684, 'everest mahallesi izlenme sokak istanbul'),
-(26, 1, 'karanfil', 'karakaranfil54', 'karanfil kara', 631584, 'karakaranfil@gmail.com', 149136541, 'karanfil sokak sigorta sitesi d blok');
+INSERT INTO `user` (`user_id`, `user_access_level_id`, `user_username`, `user_password`, `user_name`, `user_tc`, `user_email`, `user_phone_number`, `user_address`, `user_debt`) VALUES
+(1, 1, 'karamemet', '123456', 'Mustafa Kadir', 1567894561, NULL, NULL, NULL, 0),
+(2, 2, 'niyazi', '123789', 'Niyazi Baba', 1479633215, NULL, NULL, NULL, 0),
+(3, 3, 'tarkan', '753159', 'tarkan hilal', 1647651234, NULL, NULL, NULL, 0),
+(4, 3, 'plaka', '44444', 'Ayşe fatma', 1231231233, NULL, NULL, NULL, 0),
+(5, 3, 'byahmet', '789456', 'Ahmet Bay', 1030215364, 'sdjsdfh@gmail.com', 534366785, 'talas bahçeli evler sigorta sitesi ', 0),
+(7, 3, 'samsam', '12345', 'samet samimiyet', 541631565, 'same@gmail.com', 542254, 'talas melihşah mahallesi', 0),
+(8, 3, 'halilovski', 'halil123', 'halil ovix', 6451361, 'halilo@gmail.com', 46745213, 'bimex mahallesi bim sokağı', 0),
+(9, 3, 'yigitosivas', 'sivas', 'yiğit sivaslı', 254651314, 'kimgiyi@gmail.com', 214254, 'anayurt mahallesi direk sokak', 0),
+(10, 3, 'ensevren', 'sivaslı ', 'enes evren', 4257869, 'ens@gmail.com', 24586584, 'tokat en büyük şehir', 0),
+(11, 3, 'yunus', 'ynscn', 'yunus can', 5864565, 'ynscn@gmail.com', 35464458, 'bu adress cok gizlidir.', 0),
+(12, 3, 'marsu', 'marsus', 'marsu işletim', 53465416, 'marsu@gmail.com', 65465456, 'marsu bir su şirketidir', 0),
+(14, 3, 'kimsesizler', 'flashKutusu', 'kimsesiz usb', 5416486, 'kimsesiz@gmail.com', 4536546, 'görevli odası erciyes üniveristesi', 0),
+(15, 3, 'caykurHasan', 'hsncykur', 'Çaykur hasan', 54656846, 'hsncykur@gmail.com', 58461, 'caykur güzel bir çay markasıdır', 0),
+(16, 2, 'GamzeliYarim', 'mrvsvgli', 'Gamze Ulu', 456542, 'gamze@gmail.com', 864635133, 'gamze caddesi gamze sokak', 0),
+(18, 2, 'txtelhalil', 'halil akkürşat', 'halil kürşat ersoy', 64146, 'hallkursat@gamil.com', 4554646, 'kimsesizler mahallesi erciyes küme evler', 0),
+(19, 2, 'sumeyra', 'smyrs', 'sumeyra kırmızı', 4564686, 'smyrs@gmail.com', 6, 'tulpar caddesi monster sokak', 0),
+(20, 2, 'abraMonster', 'monsterAbra', ' Monster Abra', 5867354, 'monster@gmail.com', 45668, 'osmanoğlu caddesi istanbul', 0),
+(22, 1, 'bahriyeBsturk', 'bstrkBah', 'Bahtiyar Başturk', 13268749, 'basbah@gmail.com', 65464123, 'erciyes üniversitesi sigorta sitesi', 0),
+(23, 1, 'lotto', 'losttototos', 'lotto cüzdan', 2165855, 'lotto@gmail.com', 9634656, 'lotto cüzdan caddesi akçaburgaz mahallesi', 0),
+(24, 1, 'logitecht', 'logimouse', 'log mouse', 1687853, 'logitech@gmail.com', 46135103, 'logitech mahallesi mouse sitesi kayseri', 0),
+(25, 1, 'everest', 'everestCamera', 'Everest Kamera', 31897153, 'everstqgmail.com', 1314684, 'everest mahallesi izlenme sokak istanbul', 0),
+(26, 1, 'karanfil', 'karakaranfil54', 'karanfil kara', 631584, 'karakaranfil@gmail.com', 149136541, 'karanfil sokak sigorta sitesi d blok', 0),
+(27, 3, 'modem', '123', 'test2 testsoyad2', 999999, 'test@test.com', 555555, 'adrseimin testi', 0),
+(29, 2, 'asdadsx', 'asdsada', 'asdas asdas', 21321, 'sadsa', 1232131, '', 0);
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -424,13 +425,13 @@ ALTER TABLE `return_status`
 -- Tablo için AUTO_INCREMENT değeri `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
