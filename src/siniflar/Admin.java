@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -87,17 +88,124 @@ public class Admin extends BaseUser implements AdminController
     	rs=statement.executeQuery(query);
     	while(rs.next())
     	{
-    		cumle=rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getString(5)+" "+rs.getString(6)+" "+rs.getString(7)+" "+rs.getString(8);
+    		cumle=rs.getString(1)+","+rs.getString(2)+","+rs.getString(3)+","+rs.getString(4)+","+rs.getString(5)+","+rs.getString(6)+","+rs.getString(7)+","+rs.getString(8);
     	}
     	closeDB();
     	
     	return cumle;
     }
-    @Override
-    public void generateStatistic()
-    {
 
+    
+    //Kategori Adini Alma
+    @Override
+    public ArrayList<String> getCategoryNames() 
+    {
+    	ArrayList<String> category=new ArrayList<>();
+    	try
+    	{
+    		connectDB();
+        	
+        	String query="SELECT category.category_name FROM category";
+        	rs=statement.executeQuery(query);
+        	while(rs.next())
+        	{
+        		category.add(rs.getString(1));
+        	}
+        	closeDB();
+    	}   	
+    	catch (SQLException ex) 
+    	{
+			ex.printStackTrace();
+		}
+    	return category;
     }
+    
+    //Kategorilere Gore Kitap Sayisi Alma
+    @Override
+    public double categoryKitapSayi(String categoryName)
+    {
+    	double sayi=0.0;
+    	int categoryID=0;
+    	ResultSet rsSayi;
+    	try
+    	{
+    		connectDB();
+        	
+        	String queryCategoryID="SELECT category_id FROM category WHERE category_name='"+categoryName+"'";
+        	rs=statement.executeQuery(queryCategoryID);
+        	while(rs.next())
+        	{
+        		categoryID=rs.getInt(1);
+        	}
+        	
+        	String queryCategorySayisi="SELECT COUNT(book.book_category_id) FROM book WHERE book.book_category_id='"+categoryID+"'";
+        	rsSayi=statement.executeQuery(queryCategorySayisi);
+        	while(rsSayi.next())
+        	{
+        		sayi=rsSayi.getDouble(1);
+        	}
+
+        	closeDB();
+    	}   	
+    	catch (SQLException ex) 
+    	{
+			ex.printStackTrace();
+		}
+    	return sayi;
+    	
+    }
+    
+    //Islem Tarihini Alma
+    @Override
+    public ArrayList<String> getTransactionDate() 
+    {
+    	ArrayList<String> date=new ArrayList<>();
+    	try
+    	{
+    		connectDB();
+        	
+        	String query="SELECT transaction_date FROM transaction GROUP BY transaction_date";
+        	rs=statement.executeQuery(query);
+        	while(rs.next())
+        	{
+        		date.add(rs.getString(1));
+        	}
+        	closeDB();
+    	}   	
+    	catch (SQLException ex) 
+    	{
+			ex.printStackTrace();
+		}
+    	return date;
+    }
+    
+    //Hangi tarih de kac tane kitap verildiði ogreniliyor.
+    @Override
+    public double dateBookCount(String date)
+    {
+    	double sayi=0.0;
+    	
+    	try
+    	{
+    		connectDB();
+        	
+        	String query="SELECT COUNT(transaction.transaction_id) FROM transaction WHERE transaction_return_status_id='1' AND transaction_date='"+date+"'";
+        	rs=statement.executeQuery(query);
+        	while(rs.next())
+        	{
+        		sayi=rs.getInt(1);
+        	}
+
+        	closeDB();
+    	}   	
+    	catch (SQLException ex) 
+    	{
+			ex.printStackTrace();
+		}
+    	return sayi;
+    	
+    }
+    
     
     //Kutuphaneci Listeleme
     @Override
@@ -131,7 +239,7 @@ public class Admin extends BaseUser implements AdminController
             Class.forName("com.mysql.jdbc.Driver");
             //String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
             String url="jdbc:mysql://localhost:3306/librarymanagement?serverTimezone=UTC";
-            connection = DriverManager.getConnection(url,"root","");
+            connection = DriverManager.getConnection(url,"root","1234");
             statement =connection.createStatement();
         }
         catch (ClassNotFoundException ex)
